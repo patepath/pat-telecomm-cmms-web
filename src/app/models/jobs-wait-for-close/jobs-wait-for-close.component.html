@@ -1,0 +1,29 @@
+<div class="container-fluid overflow-auto">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">รายการงานรอปิด</span>
+        </div>
+    </nav>
+
+    <div class="table-responsive">
+        <table id="jobs-wait-for-close-table" class="table table-hover">
+            <caption></caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable.headerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tfoot>
+                <tr>
+                    <th *ngFor="let footer of dataTable.footerRow">{{footer}}</th>
+                </tr>
+            </tfoot>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

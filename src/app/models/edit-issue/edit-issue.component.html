@@ -1,0 +1,204 @@
+<div class="container-fluid overflow-auto" style="height: 100vh;">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">ปิดงานซ่อม</span>
+        </div>
+    </nav>
+
+    <div class="p-2">
+        <h1>{{issueType.name}}</h1>
+    </div>
+
+    <div class="d-flex flex-wrap mb-2">
+        <div class="form-group me-1" style="width: 10em">
+            <label class="label label-default">เลขที่รับเรื่อง</label>
+            <input class="form-control" [(ngModel)]="issue.issueno" disabled="true">
+        </div>
+
+        <div class="form-group me-1" style="width: 10em">
+            <label class="label label-default">เลขหมาย</label>
+            <input class="form-control" [(ngModel)]="issue.phone.number" disabled="true">
+        </div>
+
+        <div class="form-group me-1 w-25">
+            <label class="label label-default">ชื่อผู้แจ้ง</label>
+            <input class="form-control" [(ngModel)]="issue.issueby" [disabled]="info.position != 'admin'">
+        </div>
+
+        <div class="form-group me-1">
+            <label class="label label-default">หมายเลขโทรศัพท์ติดต่อ</label>
+            <input class="form-control" [(ngModel)]="issue.issuecontactno" [disabled]="info.position != 'admin'">
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap mb-2">
+        <div class="form-group me-1 w-100">
+            <label class="label label-default">สถานที่/แผนก</label>
+            <input class="form-control" [(ngModel)]="issue.phone.location" disabled="true">
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap mb-2">
+        <div class="form-group mb-2 w-25">
+            <label class="label label-default">ประเภทงาน</label>
+            <input class="form-control" [value]="issueTypes[issue.issuetype].name" disabled="true">
+        </div>
+
+        <div class="form-group w-100">
+            <label class="label label-default">ความต้องการ/อาการเสีย</label>
+            <textarea class="form-control" rows="5" [(ngModel)]="issue.issuedescription" [disabled]="info.position != 'admin'"></textarea>
+        </div>
+    </div>
+
+    @if(info.position === 'admin') {
+        <div class="form-group mb-2">
+            <input type="file" multiple="true" accept="image/*" class="form-control"  (change)="onFileSelect($event)">
+        </div>
+    }
+
+    <div class="d-flex flex-wrap">
+        @for(preview of previews; track $index)  {
+            <img [src]="preview" class="d-flex flex-wrap me-3 mb-3" style="width: 24%; height: auto;"/>
+        }   
+    </div>
+
+    <div class="d-flex flex-wrap mt-3 mb-2">
+        <div class="form-group me-1" style="width: 12em">
+            <label class="label label-default">หมายเลขเคเบิ้ล</label>
+            <input class="form-control" [(ngModel)]="issue.phone.hc" disabled="true">
+        </div>
+
+        <div class="form-group me-1" style="width: 10em">
+            <label class="label label-default">TC1</label>
+            <input class="form-control" [(ngModel)]="issue.phone.tc1">
+        </div>
+
+        <div class="form-group me-1" style="width: 10em">
+            <label class="label label-default">TC2</label>
+            <input class="form-control" [(ngModel)]="issue.phone.tc2">
+        </div>
+
+        <div class="form-group me-1" style="width: 10em">
+            <label class="label label-default">TC3</label>
+            <input class="form-control" [(ngModel)]="issue.phone.tc3">
+        </div>
+        
+        <div class="form-group me-1" style="width: 10em">
+            <label class="label label-default">TC4</label>
+            <input class="form-control" [(ngModel)]="issue.phone.tc4">
+        </div>
+
+        <div class="form-group me-1" style="width: 10em">
+            <label class="label label-default">TC5</label>
+            <input class="form-control" [(ngModel)]="issue.phone.tc5">
+        </div>
+    </div>
+
+    <button class="btn btn-info me-1 mb-2" (click)="print()">
+        <em class="fa fa-print"></em>
+        พิมพ์ใบสั่งงาน
+    </button>
+
+    <div class="d-flex flex-wrap mb-2">
+        <div class="form-group w-100">
+            <label class="label label-default">สาเหตุ</label>
+            <textarea class="form-control" rows="5" [(ngModel)]="issue.issuecause"></textarea>
+        </div>
+    </div>
+
+    <div class="d-flex flex-warp mb-2">
+        <div class="form-group w-100">
+            <label class="label label-default">การดำเนินงาน/แก้ไข</label>
+            <textarea class="form-control" rows="5" [(ngModel)]="issue.issuesolution"></textarea>
+        </div>
+    </div>
+
+    <div class="table-responsive mt-3 mb-3">
+        <table id="part-usage-table" class="table table-bordered">
+            <caption>รายการอะไหล่ที่ใช้</caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable.headerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tfoot>
+                <tr>
+                    <th *ngFor="let footer of dataTable.footerRow">{{footer}}</th>
+                </tr>
+            </tfoot>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="d-flex flex-wrap mb-2">
+        <div class="form-group me-1w-25">
+            <label class="label label-default">ชื่อช่าง</label>
+            <select class="form-select" [(ngModel)]="techId">
+                <option [ngValue]="0">- เลือก -</option>
+                <option *ngFor="let opt of techs" [ngValue]="opt.id">{{opt.firstname + ' '+ opt.lastname}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="d-flex flex-col mt-3 mb-3">
+        <button class="btn btn-success me-1" (click)="save()">
+            <em class="fa fa-save"></em>
+            บันทึก
+        </button>
+
+        @if(info.role == 1 && issue.status == 1) {
+            <button class="btn btn-info me-1" (click)="approve()">
+                <em class="fa fa-save"></em>
+                ปิดงานซ่อม
+            </button>
+        }
+
+        <button class="btn btn-secondary me-1" (click)="cancel()">
+            <em class="fa fa-window-close-o"></em>
+            ออก
+        </button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="partModal" tabindex="-1" aria-labelledby="partModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ข้อมูลอะไหล่</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column">
+            <div class="form-group mt-1">
+                <label>ชื่ออะไหล่</label>
+                <select class="form-select" [(ngModel)]="part" (ngModelChange)="changePart()">
+                    <option *ngFor="let opt of parts" [ngValue]="opt">{{opt.name}}</option>
+                </select>
+            </div>
+
+            <div class="form-group mt-1 w-50">
+                <label>ใช้จำนวน ({{partusage.unit}})</label>
+                <input type="number" class="form-control" [(ngModel)]="partusage.qty">
+            </div>
+
+            <div class="form-group mt-1">
+                <label>หมายเหตุ</label>
+                <input type="text" class="form-control" [(ngModel)]="partusage.remark">
+            </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="appendpart()">{{partInx < 0 ? 'เพิ่มอะไหล่' : 'บันทึก'}}</button>
+        <button type="button" class="btn btn-danger" (click)="removepart()" [disabled]="partInx < 0">ลบอะไหล่</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ออก</button>
+      </div>
+    </div>
+  </div>
+</div>

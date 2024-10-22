@@ -1,0 +1,122 @@
+export interface LoginInfo {
+  fullname: string;
+  position: string;
+  role: number;
+  token: string;
+}
+
+export interface Phone {
+    id: number;
+    number: string;
+    location: string;
+    hc: string;
+    kc: string;
+    tc1: string;
+    tc2: string;
+    tc3: string;
+    tc4: string;
+    tc5: string;
+}
+
+export interface IssueType {
+  value: number
+  name: string
+}
+
+export interface Issue {
+    id: number;
+    issueno: string;
+    phone: Phone;
+    tech?: User;
+    created: Date;
+    issuetype: number;
+    issuetypeother: string;
+    issueby: string;
+    issuecontactno: string;
+    issuedescription: string;
+    issuecause: string;
+    issuesolution: string;
+    engineercode: string;
+    ext: string;
+    finisheddate: Date;
+    status: number;
+    partusages: PartUsage[];
+}
+
+export interface APIfileAttach {
+  success: boolean;
+  issue: string;
+  data: FileAttachInfomation[];
+}
+
+export interface FileAttachInfomation {
+    issueno: string;
+    order: number;
+    filepath: string;
+    b64: string;
+}
+
+export interface Department {
+  id: number;
+  code: string;
+  name: string;
+}
+
+export interface Equipment {
+  id: number;
+  code: string;
+  name: string;
+  group: Group | undefined;
+}
+
+export interface Group {
+  id: number;
+  code: string;
+  name: string;
+}
+export interface Category {
+  id: number;
+  code: string;
+  name: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  password: string;
+  role: number;
+  firstname: string;
+  lastname: string;
+  position: string;
+  status: number;
+}
+
+export interface Part {
+  id: number;
+  code: string;
+  name: string;
+  qty: number;
+  unit: string;
+}
+
+export interface PartUsage {
+  issueid: number;
+  partid: number;
+  rank: number;
+  code: string;
+  name: string;
+  qty: number;
+  unit: string;
+  remark: string;
+}
+
+export interface APIResult {
+  issueno: string;
+  success: boolean;
+}
+
+export interface APIget {
+  id: string;
+  success: boolean;
+  data: string;
+}

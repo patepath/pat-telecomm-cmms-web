@@ -1,0 +1,88 @@
+<div class="container-fluid overflow-auto">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">ข้อมูลหมายเลข</span>
+        </div>
+    </nav>
+
+    <div class="contianer-fluid p-2">
+        <table id="phone-table" class="table table-hover">
+            <caption></caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable.footerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ข้อมูลหมายเลข</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column">
+            <div class="form-group">
+                <label>หมายเลข</label>
+                <input type="text" class="form-control" [(ngModel)]="phone.number">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>สถานที่</label>
+                <textarea class="form-control" [(ngModel)]="phone.location"></textarea>
+            </div>
+            
+            <div class="form-group mt-2">
+                <label>เคเบิ้ลต้นทาง</label>
+                <input type="text" class="form-control" [(ngModel)]="phone.hc">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>เคเบิ้ลออก</label>
+                <input type="text" class="form-control" [(ngModel)]="phone.kc">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>TC 1</label>
+                <input type="text" class="form-control" [(ngModel)]="phone.tc1">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>TC 2</label>
+                <input type="text" class="form-control" [(ngModel)]="phone.tc2">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>TC 3</label>
+                <input type="text" class="form-control" [(ngModel)]="phone.tc3">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>TC 4</label>
+                <input type="text" class="form-control" [(ngModel)]="phone.tc4">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>TC 5</label>
+                <input type="text" class="form-control" [(ngModel)]="phone.tc5">
+            </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="save()">บันทึก</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ออก</button>
+      </div>
+    </div>
+  </div>
+</div>

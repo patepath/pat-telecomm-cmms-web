@@ -1,0 +1,66 @@
+<div class="container-fluid overflow-auto">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">อุปกรณ์/อะไหล่</span>
+        </div>
+    </nav>
+
+    <div class="row p-2">
+        <div class="col-12">
+            <table id="part-table" class="table table-hover">
+                <caption></caption>
+
+                <thead>
+                    <tr>
+                        <th *ngFor="let header of dataTable.headerRow">{{header}}</th>
+                    </tr>
+                </thead>
+
+                <tfoot>
+                    <tr>
+                        <th *ngFor="let footer of dataTable.footerRow">{{footer}}</th>
+                    </tr>
+                </tfoot>
+
+                <tbody>
+                    <tr *ngFor="let row of dataTable.dataRows"></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="partModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ข้อมูลอะไหล่</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column">
+            <div class="form-group mt-1 w-50">
+                <label>รหัส</label>
+                <input type="text" class="form-control" [(ngModel)]="part.code">
+            </div>
+
+            <div class="form-group mt-1">
+                <label>ชื่ออะไหล่</label>
+                <input type="text" class="form-control" [(ngModel)]="part.name">
+            </div>
+
+            <div class="form-group mt-1 w-25">
+                <label>หน่วย</label>
+                <input type="text" class="form-control" [(ngModel)]="part.unit">
+            </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="save()">บันทึก</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ออก</button>
+      </div>
+    </div>
+  </div>
+</div>

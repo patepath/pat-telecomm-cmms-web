@@ -1,0 +1,47 @@
+import { Routes } from '@angular/router';
+import { DefaultLayoutComponent } from './layout/default-layout/default-layout.component';
+import { NewIssueComponent } from './models/new-issue/new-issue.component';
+import { JobsTodayComponent } from './models/jobs-today/jobs-today.component';
+import { JobsProcessComponent } from './models/jobs-process/jobs-process.component';
+import { JobsWaitForCloseComponent } from './models/jobs-wait-for-close/jobs-wait-for-close.component';
+import { JobsClosedComponent } from './models/jobs-closed/jobs-closed.component';
+import { LoginComponent } from './models/login/login.component';
+import { SettingUserComponent } from './models/setting-user/setting-user.component';
+import { SettingDepartmentComponent } from './models/setting-department/setting-department.component';
+import { SettingPhoneComponent } from './models/setting-phone/setting-phone.component';
+import { SettingPartComponent } from './models/setting-part/setting-part.component';
+import { EditIssueComponent } from './models/edit-issue/edit-issue.component';
+import { PrnNewissueComponent } from './models/prn-newissue/prn-newissue.component';
+
+export const routes: Routes = [
+    { path: 'login', component: LoginComponent},
+    { path: 'prn-newissue', component: PrnNewissueComponent},
+    { path: '', redirectTo: '/login', pathMatch: 'full' }, 
+    { 
+        path: 'admin', 
+        component: DefaultLayoutComponent,
+        children: [
+            { path: 'new-issue', component: NewIssueComponent },
+            { path: 'edit-issue/:id', component: EditIssueComponent },
+            { path: 'jobs-today', component: JobsTodayComponent },
+            { path: 'jobs-process', component: JobsProcessComponent },
+            { path: 'jobs-wait-for-close', component: JobsWaitForCloseComponent },
+            { path: 'jobs-closed', component: JobsClosedComponent },
+            { path: 'setting-user', component: SettingUserComponent},
+            { path: 'setting-department', component: SettingDepartmentComponent},
+            { path: 'setting-part', component: SettingPartComponent},
+            { path: 'setting-phone', component: SettingPhoneComponent},
+        ]
+    },
+    { 
+        path: 'tech', 
+        component: DefaultLayoutComponent,
+        children: [
+            { path: 'new-issue', component: NewIssueComponent },
+            { path: 'jobs-today', component: JobsTodayComponent },
+            { path: 'jobs-process', component: JobsProcessComponent },
+            { path: 'jobs-wait-for-close', component: JobsWaitForCloseComponent },
+            { path: 'jobs-closed', component: JobsClosedComponent },
+        ]
+    }
+];
