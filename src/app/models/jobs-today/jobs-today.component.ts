@@ -1,14 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Issue } from '../../interfaces';
+import { DataTable, Issue } from '../../interfaces';
 import { JobsTodayService } from '../../services/jobs-today.service';
 import { Router } from '@angular/router';
-
-declare interface DataTable {
-    headerRow: string[];
-    footerRow: string[];
-    dataRows: string[][];
-}
 
 declare let $:any;
 
@@ -57,16 +51,17 @@ export class JobsTodayComponent implements AfterViewInit {
       dom: 'Bfrtip',
       buttons: ['copy', 'csv', 'excel', 'print'],
       columnDefs: [
-        { targets: [0], width: '3em', className: 'text-center' },
-        { targets: [1], width: '8em', className: 'text-center' },
-        { targets: [2], width: '10em', className: 'text-center' },
-        { targets: [3, 5, -1], width: '12em', className: 'text-center' },
+        { targets: [0], width: '3rem', className: 'text-center' },
+        { targets: [1,2,3], width: '8rem', className: 'text-center' },
+        { targets: [4], width: '18rem' },
+        { targets: [-1,-2], width: '10rem', className: 'text-center' },
       ],
       responsive: true,
       language: {
         search: "_INPUT_",
         searchPlaceholder: "Search records",
       },
+      ordering:  false,
       paging: true,
       pageLength: 15,
       pagingType: "full_numbers",

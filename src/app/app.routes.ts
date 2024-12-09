@@ -12,6 +12,9 @@ import { SettingPhoneComponent } from './models/setting-phone/setting-phone.comp
 import { SettingPartComponent } from './models/setting-part/setting-part.component';
 import { EditIssueComponent } from './models/edit-issue/edit-issue.component';
 import { PrnNewissueComponent } from './models/prn-newissue/prn-newissue.component';
+import { ReportByStatusComponent } from './models/report-by-status/report-by-status.component';
+import { ReportBySummaryComponent } from './models/report-by-summary/report-by-summary.component';
+import { ProfileComponent } from './models/profile/profile.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent},
@@ -27,10 +30,13 @@ export const routes: Routes = [
             { path: 'jobs-process', component: JobsProcessComponent },
             { path: 'jobs-wait-for-close', component: JobsWaitForCloseComponent },
             { path: 'jobs-closed', component: JobsClosedComponent },
+            { path: 'report-by-status', component: ReportByStatusComponent },
+            { path: 'report-by-summary', component: ReportBySummaryComponent },
             { path: 'setting-user', component: SettingUserComponent},
             { path: 'setting-department', component: SettingDepartmentComponent},
             { path: 'setting-part', component: SettingPartComponent},
             { path: 'setting-phone', component: SettingPhoneComponent},
+            { path: 'setting-profile', component: ProfileComponent },
         ]
     },
     { 
@@ -42,6 +48,8 @@ export const routes: Routes = [
             { path: 'jobs-process', component: JobsProcessComponent },
             { path: 'jobs-wait-for-close', component: JobsWaitForCloseComponent },
             { path: 'jobs-closed', component: JobsClosedComponent },
+            { path: 'report-by-status', component: ReportByStatusComponent },
+            { path: 'report-by-summary', component: ReportBySummaryComponent },
         ]
     }
 ];

@@ -49,4 +49,12 @@ export class IssueService {
     return this._http.get<Issue>(`${URLAPI}/issue/findbyid/${token}/${id}`);
   }
 
+  findAllByDate(token: string, frmdate: string, todate: string): Observable<Issue[]> {
+    return this._http.get<Issue[]>(`${URLAPI}/issue/findallbydate/${token}/${frmdate}/${todate}`);
+  }
+
+  summaryByDate(token: string, frmdate: string, todate: string): Observable<any[]> {
+    return this._http.get<any[]>(`${URLAPI}/issue/summarybydate/${token}/${frmdate}/${todate}`);
+  }
+
 }

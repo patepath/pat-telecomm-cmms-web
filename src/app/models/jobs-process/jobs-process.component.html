@@ -1,12 +1,12 @@
 <div class="container-fluid overflow-auto">
     <nav class="navbar navbar-light bg-light mt-2 mb-3">
         <div class="container-fluid">
-            <span class="navbar-brand">รายการงานระหว่างดำเนินการ</span>
+            <span class="navbar-brand">งานระหว่างดำเนินการ</span>
         </div>
     </nav>
 
     <div class="table-responsive">
-        <table id="proceeding-issue-table" class="table table-hover">
+        <table id="proceeding-issue-table" class="table table-hover mt-1" style="width: 100%">
             <caption></caption>
 
             <thead>
@@ -15,12 +15,6 @@
                 </tr>
             </thead>
             
-            <tfoot>
-                <tr>
-                    <th *ngFor="let footer of dataTable.footerRow">{{footer}}</th>
-                </tr>
-            </tfoot>
-
             <tbody>
                 <tr *ngFor="let row of dataTable.dataRows"></tr>
             </tbody>

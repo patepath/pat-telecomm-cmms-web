@@ -1,7 +1,7 @@
 <div class="container-fluid overflow-auto">
     <nav class="navbar navbar-light bg-light mt-2 mb-3">
         <div class="container-fluid">
-            <span class="navbar-brand">รายการงานที่เสร็จแล้ว</span>
+            <span class="navbar-brand">งานที่เสร็จแล้ว</span>
         </div>
     </nav>
 
@@ -17,8 +17,8 @@
         </div>
     </div>
     
-    <div class="table-responsive">
-        <table id="jobs-completed-table" class="table table-hover">
+    <div class="table-responsive mt-3">
+        <table id="jobs-completed-table" class="table table-hover mt-1" style="width: 100%;" >
             <caption></caption>
 
             <thead>
@@ -26,12 +26,6 @@
                     <th *ngFor="let header of dataTable.headerRow">{{header}}</th>
                 </tr>
             </thead>
-
-            <tfoot>
-                <tr>
-                    <th *ngFor="let footer of dataTable.footerRow">{{footer}}</th>
-                </tr>
-            </tfoot>
 
             <tbody>
                 <tr *ngFor="let row of dataTable.dataRows"></tr>

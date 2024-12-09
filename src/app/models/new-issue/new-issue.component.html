@@ -7,7 +7,14 @@
 
     <form [formGroup]="issueFrm">
         <div class="d-flex flex-row mb-2">
+            @if(issueFrm.get('issueno')?.value) {
             <div classs="form-group">
+                <label>เลขที่งาน</label>
+                <span class="form-control">{{issueFrm.get('issueno')?.value}}</span>
+            </div>
+            }
+
+            <div class="form-group ms-1">
                 <label>วันที่รับเรื่อง</label>
                 <span class="form-control">{{issueFrm.get('created')?.value | date: "dd-MM-yyyy hh:mm:ss"}}</span>
             </div>
@@ -100,7 +107,7 @@
 
 
     <div class="table-responsive">
-        <table id="new-issue-table" class="table table-bordered mb-3">
+        <table id="new-issue-table" class="table table-bordered mt-1" style="width: 100%;">
             <caption></caption>
 
             <thead>

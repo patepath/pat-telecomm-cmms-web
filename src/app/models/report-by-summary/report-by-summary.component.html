@@ -1,0 +1,48 @@
+<div class="container-fluid overflow-auto" style="height: 100vh;">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">รายงานสรุปตามช่วงเวลา</span>
+        </div>
+    </nav>
+    
+    <div class="d-flex flex-row mb-2">
+        <div class="form-group">
+            <label>ช่วง</label>
+            <select class="form-select" #period (change)="changePeriod(period.value)">
+                <option value="0">- เลือก -</option>
+                <option value="1">ย้อนหลัง 1 ปีก่อนปีงบประมาณ</option>
+                <option value="2">ตั้งแต่เริ่มปีงบประมาณ</option>
+                <option value="3">ย้อนหลัง 3 เดือน</option>
+                <option value="4">ย้อนหลัง 1 เดือน</option>
+                <option value="5">ย้อนหลัง 1 สัปดาห์</option>
+            </select>
+        </div>
+
+        <div class="form-group ms-1">
+            <label>เริ่ม</label>
+            <input type="date" class="form-control" [(ngModel)]="frmDate" (ngModelChange)="searchbydate()" >
+        </div>
+
+        <div class="form-group ms-1">
+            <label>ถึง</label>
+            <input type="date" class="form-control ms-1" [(ngModel)]="toDate" (ngModelChange)="searchbydate()">
+        </div>
+    </div>
+    
+    <div class="table-responsive mt-3">
+        <table id="report-by-summary-table" class="table table-hover mt-1" style="width: 100%">
+            <caption></caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable.headerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -120,3 +120,24 @@ export interface APIget {
   success: boolean;
   data: string;
 }
+
+export interface DataTable {
+  headerRow: string[];
+  footerRow: string[];
+  dataRows: string[][];
+}
+
+export interface Profile {
+  name1: string;
+  position1: string;
+  name2: string;
+  position2: string;
+  name3: string;
+  position3: string;
+  name4: string;
+  position4: string;
+  name5: string;
+  position5: string;
+  name6: string;
+  position6: string;
+}

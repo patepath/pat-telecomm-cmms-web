@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../../services/profile.service';
+import { ProfileComponent } from '../profile/profile.component';
+import { Profile } from '../../interfaces';
 
 @Component({
   selector: 'app-prn-newissue',
@@ -16,7 +19,12 @@ export class PrnNewissueComponent implements OnInit {
   public x: string='10';
   public y: string='10';
 
-  constructor() {
+  public profile: Profile;
+
+  constructor(private _profileServ: ProfileService) {
+    this.profile=<Profile>{};
+
+    this._profileServ.get().subscribe(s => this.profile=s);
   }
 
   ngOnInit(): void {
@@ -47,37 +55,37 @@ export class PrnNewissueComponent implements OnInit {
     switch(type) {
       case '1':
         this.x = '5.8';
-        this.y = '3.8';
+        this.y = '3.3';
         break;
 
       case '2':
         this.x = '8.3';
-        this.y = '3.8';
+        this.y = '3.3';
         break
       
       case '3':
         this.x = '12.01';
-        this.y = '3.8';
+        this.y = '3.3';
         break
 
       case '4':
         this.x = '5.8';
-        this.y = '4.85';
+        this.y = '4.35';
         break;
 
       case '5':
         this.x = '8.3';
-        this.y = '4.85';
+        this.y = '4.35';
         break;
 
       case '6':
         this.x = '12.01';
-        this.y = '4.85';
+        this.y = '4.35';
         break;
 
       case '99':
         this.x = '14.53';
-        this.y = '4.85';
+        this.y = '4.35';
         break;
     }
 

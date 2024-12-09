@@ -87,8 +87,8 @@ export class NewIssueComponent implements AfterViewInit {
 		private _sanitizer: DomSanitizer) {
 
 		this.dataTable = {
-			headerRow: ['วันที่', 'เลขที่รับเรื่อง', 'หมายเลข', 'ประเภทงาน', 'ชื่อผู้แจ้ง', 'โทรศัพท์ติดต่อ' ],
-			footerRow: ['วันที่', 'เลขที่รับเรื่อง', 'หมายเลข', 'ประเภทงาน', 'ชื่อผู้แจ้ง', 'โทรศัพท์ติดต่อ' ],
+			headerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'หมายเลข', 'ประเภทงาน', 'ชื่อผู้แจ้ง', 'โทรศัพท์ติดต่อ', 'สถานะ' ],
+			footerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'หมายเลข', 'ประเภทงาน', 'ชื่อผู้แจ้ง', 'โทรศัพท์ติดต่อ', 'สถานะ' ],
 			dataRows: [],
 		};
 
@@ -132,9 +132,8 @@ export class NewIssueComponent implements AfterViewInit {
 			dom: 'frtip',
 			buttons: ['copy', 'csv', 'excel', 'print'],
 			columnDefs: [
-				{ target: [0], width: '13em', className: 'text-center' },
-				{ target: [1, 2], width: '12em', className: 'text-center' },
-				{ target: [-1], width: '12em' },
+				{ target: [0,1,2,3], width: '8rem', className: 'text-center' },
+				{ target: [-1, -2, -3], width: '10rem', className: 'text-center' },
 			],
 			responsive: true,
 			language: {
@@ -166,6 +165,7 @@ export class NewIssueComponent implements AfterViewInit {
 		if(this.issues != null) {
 			let date: Date;
 			let showdate: string;
+			let showtime: string;
 
 			let table = $('#new-issue-table').DataTable();
 			table.clear();
@@ -174,15 +174,18 @@ export class NewIssueComponent implements AfterViewInit {
 			if(this.issues) {
 				this.issues.forEach(s => {
 					date = new Date(s.created.toString());
-					showdate = date.toISOString().split('T')[0] + ' ' + date.toTimeString().split(' ')[0]; 
+					showdate = date.toISOString().split('T')[0]; 
+					showtime = date.toTimeString().split(' ')[0]; 
 
 					this.data.push([
 						showdate, 
+						showtime,
 						s.issueno,
 						s.phone.number + '', 
 						this.issueTypes[s.issuetype].name,
 						s.issueby, 
 						s.issuecontactno,
+						this.getStatus(s.status)
 					]);
 				});
 			}
@@ -190,6 +193,26 @@ export class NewIssueComponent implements AfterViewInit {
 			table.rows.add(this.data);
 			table.draw();
 		}
+	}
+
+	getStatus(status: number): string {
+		var v: string='';
+
+		switch(status) {
+			case 1:
+				v='ดำเนินการ';
+				break;
+			
+			case 2:
+				v='รอปิดงาน';
+				break;
+			
+			case 3:
+				v='ปิดงาน'
+				break;
+		}
+
+		return v; 
 	}
 
 	searchIssue() {
