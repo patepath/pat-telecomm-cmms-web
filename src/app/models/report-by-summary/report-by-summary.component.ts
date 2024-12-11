@@ -33,8 +33,8 @@ export class ReportBySummaryComponent {
       }
 
       this.dataTable = {
-        headerRow: ['ลำดับ', 'ประเภทงาน', 'ดำเนินการ', 'รอปิดงาน', 'ปิดงาน', 'ยกเลิก' ],
-        footerRow: ['ลำดับ', 'ประเภทงาน', 'ดำเนินการ', 'รอปิดงาน', 'ปิดงาน', 'ยกเลิก' ],
+        headerRow: ['ลำดับ', 'ประเภทงาน', 'ดำเนินการ', 'ปิดงาน', 'ยกเลิก' ],
+        footerRow: ['ลำดับ', 'ประเภทงาน', 'ดำเนินการ', 'ปิดงาน', 'ยกเลิก' ],
         dataRows: [],
       };
 
@@ -61,7 +61,7 @@ export class ReportBySummaryComponent {
       buttons: ['copy', 'csv', 'excel', 'print'],
       columnDefs: [
         { targets: [0], width: '5rem', className: 'text-center' },
-        { targets: [-1,-2,-3,-4], width: '10rem', className: 'text-center' },
+        { targets: [-1,-2,-3], width: '10rem', className: 'text-center' },
       ],
       responsive: true,
       language: {
@@ -100,7 +100,6 @@ export class ReportBySummaryComponent {
         String(i+1),
         this.getIssueType(s.issue_type),
         String(s.proceeding),
-        String(s.waitforclosed),
         String(s.closed),
         String(s.cancelled),
       ]);
