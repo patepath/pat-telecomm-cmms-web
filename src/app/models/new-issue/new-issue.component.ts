@@ -73,7 +73,7 @@ export class NewIssueComponent implements AfterViewInit {
 		issuesolution: new FormControl(),
 		engineercode: new FormControl(),
 		finisheddate: new FormControl(),
-		status: new FormControl(1),
+		status: new FormControl(0),
 		partusages: new FormControl(),
 		isattach: new FormControl(false),
 		file: new FormControl()
@@ -199,16 +199,16 @@ export class NewIssueComponent implements AfterViewInit {
 		var v: string='';
 
 		switch(status) {
-			case 1:
+			case 0:
 				v='ดำเนินการ';
 				break;
 			
+			case 1:
+				v='ปิดงาน'
+				break;
+
 			case 2:
 				v='รอปิดงาน';
-				break;
-			
-			case 3:
-				v='ปิดงาน'
 				break;
 		}
 
@@ -273,11 +273,11 @@ export class NewIssueComponent implements AfterViewInit {
 		this.issueFrm.get('issuetype')?.setValue(0);
 		this.issueFrm.get('isattach')?.setValue(false);
 		this.issueFrm.get('file')?.setValue(null);
-		this.issueFrm.get('status')?.setValue(1);
+		this.issueFrm.get('status')?.setValue(0);
 
 		this.issue = <Issue>{}
 		this.issue.id = 0;
-		this.issue.status=1;
+		this.issue.status=0;
 		this.phones = [];
 		this.files = <FileList>{};
 		this.filenames = [];

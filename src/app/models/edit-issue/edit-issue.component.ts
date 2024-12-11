@@ -289,7 +289,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
   }
 
   approve() {
-    this.issue.status = 3;
+    this.issue.status = 1;
     this.issue.partusages = this.partusages;
     this.issue.finisheddate = new Date();
     this.issue.tech = this.techs.find(val => val.id == this.techId);
@@ -300,7 +300,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
   }
 
   decline() {
-    this.issue.status = 1;
+    this.issue.status = 99;
 
     this._issueServ.save(this.info.token, this.issue, false, true).subscribe(rs => {
       history.back();

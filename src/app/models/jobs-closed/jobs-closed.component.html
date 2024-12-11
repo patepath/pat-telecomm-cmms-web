@@ -6,6 +6,18 @@
     </nav>
 
     <div class="d-flex flex-row mb-2">
+        <div class="form-group">
+            <label>ช่วง</label>
+            <select class="form-select" #period (change)="changePeriod(period.value)">
+                <option value="0">- เลือก -</option>
+                <option value="1">ย้อนหลัง 1 ปีก่อนปีงบประมาณ</option>
+                <option value="2">ตั้งแต่เริ่มปีงบประมาณ</option>
+                <option value="3">ย้อนหลัง 3 เดือน</option>
+                <option value="4">ย้อนหลัง 1 เดือน</option>
+                <option value="5">ย้อนหลัง 1 สัปดาห์</option>
+            </select>
+        </div>
+
         <div classs="form-group">
             <label>เริ่ม</label>
             <input type="date" class="form-control" [(ngModel)]="frmDate" (ngModelChange)="searchbydate()" >

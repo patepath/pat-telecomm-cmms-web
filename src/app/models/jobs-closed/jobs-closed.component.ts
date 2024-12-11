@@ -36,8 +36,8 @@ export class JobsClosedComponent implements AfterViewInit {
     private readonly _rptServ: JobsCompletedService,
     private readonly _router: Router) {
     this.dataTable = {
-      headerRow: ['ที่', 'วันที่รับเรื่อง', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'เหตุเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
-      footerRow: ['ที่', 'วันที่รับเรื่อง', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'เหตุเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
+      headerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'เหตุเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
+      footerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'เหตุเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
       dataRows: [],
     };
 
@@ -85,8 +85,8 @@ export class JobsClosedComponent implements AfterViewInit {
       }],
       columnDefs: [
         { targets: [0], width: '3rem', className: 'text-center' },
-        { targets: [1,2,3], width: '8rem', className: 'text-center' },
-        { targets: [4], width: '18rem' },
+        { targets: [1,2,3,4], width: '8rem', className: 'text-center' },
+        { targets: [5], width: '18rem' },
         { targets: [-1,-2], width: '10rem', className: 'text-center' },
       ],
       responsive: true,
@@ -96,7 +96,7 @@ export class JobsClosedComponent implements AfterViewInit {
       },
       ordering: false,
       paging: true,
-      pageLength: 15,
+      pageLength: 10,
       pagingType: "full_numbers",
     });
 
@@ -130,6 +130,7 @@ export class JobsClosedComponent implements AfterViewInit {
         this.data.push([
           String(i+1),
           s.created.toString().split('T')[0],
+          s.created.toString().split('T')[1].split('+')[0],
           s.issueno,
           s.phone.number,
           s.phone.location,
@@ -149,6 +150,52 @@ export class JobsClosedComponent implements AfterViewInit {
       this.issues = rs;
       this.refreshTable();
     });  
+  }
+
+  changePeriod(period: string) {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth();
+    var date = today.getDate();
+
+    switch(period) {
+      case "1":
+        if(month < 9) {
+          today.setFullYear(year-2);
+        } else {
+          today.setFullYear(year-1);
+        }
+
+        today.setMonth(9);
+        today.setDate(1);
+        break;
+
+      case "2":
+        if(month < 9) {
+          today.setFullYear(year-1);
+        }
+
+        today.setMonth(9);
+        today.setDate(1);
+        break;
+      
+      case "3":
+        today.setMonth(month-3);
+        today.setDate(1);
+        break;
+
+      case "4":
+        today.setMonth(month-1);
+        today.setDate(1);
+        break;
+
+      case "5":
+        today.setDate(date-7);
+        break;
+    }
+
+    this.frmDate = today.toISOString().split('T')[0];
+    this.searchbydate();
   }
 
   searchbydate() {

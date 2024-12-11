@@ -118,16 +118,13 @@ export class ReportByStatusComponent implements AfterViewInit {
   getStatus(status: number): string {
     switch(status) {
       case 0:
-        return 'ยกเลิก'
+        return 'ดำเนินการ'
 
       case 1:
-        return 'ดำเนินการ'
-
-      case 2:
-        return 'ดำเนินการ'
-
-      case 3:
         return 'ปิดงาน'
+
+      case 99:
+        return 'ยกเลิก'
     }
 
     return 'N/A'

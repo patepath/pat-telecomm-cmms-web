@@ -113,6 +113,7 @@
         </div>
     </div>
 
+
     <div class="table-responsive mt-3 mb-3">
         <table id="part-usage-table" class="table table-bordered">
             <caption>รายการอะไหล่ที่ใช้</caption>
@@ -145,13 +146,14 @@
         </div>
     </div>
 
+
     <div class="d-flex flex-col mt-3 mb-3">
         <button class="btn btn-success me-1" (click)="save()">
             <em class="fa fa-save"></em>
             บันทึก
         </button>
 
-        @if(info.role == 1 && issue.status == 1) {
+        @if(info.role == 1 && issue.status == 0) {
             <button class="btn btn-info me-1" (click)="approve()">
                 <em class="fa fa-save"></em>
                 ปิดงานซ่อม
