@@ -46,10 +46,8 @@ export const routes: Routes = [
             { path: 'new-issue', component: NewIssueComponent },
             { path: 'jobs-today', component: JobsTodayComponent },
             { path: 'jobs-process', component: JobsProcessComponent },
-            { path: 'jobs-wait-for-close', component: JobsWaitForCloseComponent },
             { path: 'jobs-closed', component: JobsClosedComponent },
-            { path: 'report-by-status', component: ReportByStatusComponent },
-            { path: 'report-by-summary', component: ReportBySummaryComponent },
+            { path: 'setting-phone', component: SettingPhoneComponent },
         ]
     }
 ];

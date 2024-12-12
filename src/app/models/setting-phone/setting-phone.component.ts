@@ -43,6 +43,7 @@ export class SettingPhoneComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initTable();
+    this.search();
   }
 
   initTable() {
@@ -88,8 +89,6 @@ export class SettingPhoneComponent implements AfterViewInit {
       let $tr = $(this).closest('tr');
       self.edit(table.row(this).index())
     });
-
-    self.search();
   }
 
   refreshTable() {
