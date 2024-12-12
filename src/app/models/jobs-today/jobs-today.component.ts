@@ -27,8 +27,8 @@ export class JobsTodayComponent implements AfterViewInit {
     private readonly _rptServ: JobsTodayService, 
     private readonly _router: Router) {
       this.dataTable = {
-        headerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'เหตุเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
-        footerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'เหตุเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
+        headerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'เหตุเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ', 'สถานะ' ],
+        footerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'เหตุเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ', 'สถานะ' ],
         dataRows: [],
       };
 
@@ -78,7 +78,7 @@ export class JobsTodayComponent implements AfterViewInit {
         { targets: [0], width: '3rem', className: 'text-center' },
         { targets: [1,2,3,4], width: '8rem', className: 'text-center' },
         { targets: [5], width: '18rem' },
-        { targets: [-1,-2], width: '10rem', className: 'text-center' },
+        { targets: [-1,-2,-3], width: '10rem', className: 'text-center' },
       ],
       responsive: true,
       language: {
@@ -125,7 +125,8 @@ export class JobsTodayComponent implements AfterViewInit {
           s.phone.location,
           s.issuedescription,
           s.phone.hc,
-          s.issuecontactno
+          s.issuecontactno,
+          this.getStatus(s.status)
         ]);
       });
     }
@@ -134,6 +135,20 @@ export class JobsTodayComponent implements AfterViewInit {
     table.draw();
   }
 
+  getStatus(status: number): string {
+    switch(status) {
+      case 0:
+        return 'ดำเนินการ'
+
+      case 1:
+        return 'ปิดงาน'
+
+      case 99:
+        return 'ยกเลิก'
+    }
+
+    return 'N/A'
+  }
   search() {
     this._rptServ.findall(this.token, this.frmDate).subscribe(rs => {
       this.issues = rs;

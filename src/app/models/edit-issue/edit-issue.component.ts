@@ -300,11 +300,13 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
   }
 
   decline() {
-    this.issue.status = 99;
+    if(confirm("ต้องการลบงานหรือไม่ ?")) {
+      this.issue.status = 99;
 
-    this._issueServ.save(this.info.token, this.issue, false, true).subscribe(rs => {
-      history.back();
-    });
+      this._issueServ.save(this.info.token, this.issue, false, true).subscribe(rs => {
+        history.back();
+      });
+    } 
   }
 
   cancel() {
