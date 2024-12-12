@@ -3,15 +3,14 @@ import { CommonModule } from '@angular/common';
 import { DataTable, Issue } from '../../interfaces';
 import { JobsTodayService } from '../../services/jobs-today.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 declare let $:any;
 
 @Component({
   selector: 'app-jobs-today',
   standalone: true,
-  imports: [
-    CommonModule
-  ],
+  imports: [ CommonModule,FormsModule ],
   templateUrl: './jobs-today.component.html',
   styleUrl: './jobs-today.component.css'
 })
@@ -22,6 +21,8 @@ export class JobsTodayComponent implements AfterViewInit {
   public issues: Issue[]=[];
   public token: string='';
   
+  public frmDate: string;
+
   constructor(
     private readonly _rptServ: JobsTodayService, 
     private readonly _router: Router) {
@@ -38,6 +39,9 @@ export class JobsTodayComponent implements AfterViewInit {
         let info = JSON.parse(storage);
         this.token = info.token;
       }
+
+      let today = new Date();
+      this.frmDate = today.toISOString().split('T')[0];
   }
 
   ngAfterViewInit(): void {
@@ -131,14 +135,14 @@ export class JobsTodayComponent implements AfterViewInit {
   }
 
   search() {
-    this._rptServ.findall(this.token).subscribe(rs => {
+    this._rptServ.findall(this.token, this.frmDate).subscribe(rs => {
       this.issues = rs;
       this.refreshTable();
     });
   }
 
   getToday() {
-    let today = new Date()
+    let today = new Date(this.frmDate);
     return today;
   }
 }

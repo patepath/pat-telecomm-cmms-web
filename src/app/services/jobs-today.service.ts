@@ -13,7 +13,7 @@ export class JobsTodayService {
 
   constructor(private readonly _http: HttpClient) { }
 
-  findall(token: string): Observable<Issue[]> {
-    return this._http.get<Issue[]>(`${URLAPI}/issue/findtoday/${token}`);
+  findall(token: string, frmDate: string): Observable<Issue[]> {
+    return this._http.get<Issue[]>(`${URLAPI}/issue/findtoday/${token}/${frmDate}`);
   }
 }
