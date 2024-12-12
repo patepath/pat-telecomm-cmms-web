@@ -77,7 +77,6 @@ export class JobsTodayComponent implements AfterViewInit {
       columnDefs: [
         { targets: [0], width: '3rem', className: 'text-center' },
         { targets: [1,2,3,4], width: '8rem', className: 'text-center' },
-        { targets: [5], width: '18rem' },
         { targets: [-1,-2,-3], width: '10rem', className: 'text-center' },
       ],
       responsive: true,
