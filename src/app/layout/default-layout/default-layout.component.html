@@ -219,18 +219,12 @@
               <hr>
 
               <li class="nav-item">
-                  <a [routerLink]="['report-by-status']" class="nav-link text-white" [ngClass]="{'active': loc === 'report-by-status'}">
-                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                      รายงานงานทั้งหมด
+                  <a [routerLink]="['setting-phone']" class="nav-link text-white" [ngClass]="{'active': loc === 'setting-phone'}" aria-current="page">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#db"/></svg>
+                      ข้อมูลเลขหมาย
                   </a>
               </li>
 
-              <li class="nav-item">
-                  <a [routerLink]="['report-by-summary']" class="nav-link text-white" [ngClass]="{'active': loc === 'report-by-summary'}">
-                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                      รายงานสรุปตามช่วงเวลา
-                  </a>
-              </li>
             </ul>
           }
         }

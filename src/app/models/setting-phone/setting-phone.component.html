@@ -34,22 +34,22 @@
         <div class="d-flex flex-column">
             <div class="form-group">
                 <label>หมายเลข</label>
-                <input type="text" class="form-control" [(ngModel)]="phone.number">
+                <input type="text" class="form-control" [(ngModel)]="phone.number" [disabled]="info.role === 2">
             </div>
 
             <div class="form-group mt-2">
                 <label>สถานที่</label>
-                <textarea class="form-control" [(ngModel)]="phone.location"></textarea>
+                <textarea class="form-control" [(ngModel)]="phone.location" [disabled]="info.role === 2"></textarea>
             </div>
             
             <div class="form-group mt-2">
                 <label>เคเบิ้ลต้นทาง</label>
-                <input type="text" class="form-control" [(ngModel)]="phone.hc">
+                <input type="text" class="form-control" [(ngModel)]="phone.hc" [disabled]="info.role === 2">
             </div>
 
             <div class="form-group mt-2">
                 <label>เคเบิ้ลออก</label>
-                <input type="text" class="form-control" [(ngModel)]="phone.kc">
+                <input type="text" class="form-control" [(ngModel)]="phone.kc" [disabled]="info.role === 2">
             </div>
 
             <div class="form-group mt-2">
