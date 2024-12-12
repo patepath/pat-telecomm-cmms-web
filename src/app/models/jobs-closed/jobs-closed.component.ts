@@ -78,7 +78,7 @@ export class JobsClosedComponent implements AfterViewInit {
                           <div style="margin-top: 4em; text-align: center">
                             <div>จึงเรียนมาเพื่อโปรดทราบ</div>
                             <div style="margin-top: 3em">(.........................................)</div>
-                            <div>ช่างเทคนิค 4</div>
+                            <div>หัวหน้าหมวดชุมสาย</div>
                             <div>.........../.........../...........</div>
                           </div>`
                         }

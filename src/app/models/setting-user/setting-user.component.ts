@@ -171,10 +171,20 @@ export class SettingUserComponent implements AfterViewInit {
   }
 
   save() {
-    this._userServ.save(this.token, this.user).subscribe(rs => {
-      this.search();
-      $('#user-modal').modal('hide');
-    });
+    if(this.user.status == 0) {
+      if(confirm("ต้องการยกเลิกการยกเลิกผู้ใช้งาน ?")) {
+        this._userServ.save(this.token, this.user).subscribe(rs => {
+          this.search();
+          $('#user-modal').modal('hide');
+        });
+      }
+
+    } else {
+      this._userServ.save(this.token, this.user).subscribe(rs => {
+        this.search();
+        $('#user-modal').modal('hide');
+      });
+    }
   }
 
   changePassword() {
