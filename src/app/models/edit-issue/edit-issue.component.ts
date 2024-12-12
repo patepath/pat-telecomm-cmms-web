@@ -302,6 +302,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
   decline() {
     if(confirm("ต้องการลบงานหรือไม่ ?")) {
       this.issue.status = 99;
+      this.issue.finisheddate = new Date();
 
       this._issueServ.save(this.info.token, this.issue, false, true).subscribe(rs => {
         history.back();

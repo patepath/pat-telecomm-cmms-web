@@ -120,7 +120,7 @@ export class ReportBySummaryComponent {
       case '4': v = 'ปรับปรุงสาย'; break;
       case '5': v = 'ย้าย'; break;
       case '6': v = 'เปลี่ยนเครื่อง'; break;
-      case '9': v = 'อื่นๆ';
+      case '99': v = 'อื่นๆ';
     } 
 
     return v;
