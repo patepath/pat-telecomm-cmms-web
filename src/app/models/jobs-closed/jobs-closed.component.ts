@@ -67,9 +67,9 @@ export class JobsClosedComponent implements AfterViewInit {
         title: '',
         messageTop:     function() {
                           return `
-                          <div>เรียน หบค./ชบค.</div>
-                          <div>เรื่อง แจ้งผลการรับแจ้งและผลการตรวจซ่อมที่แล้วเสร็จ<div>
-                          <div style="margin-top: 1em; margin-left: 4em">ประจำวันที่ ${self.getToday().getDate()}/${self.getToday().getMonth() + 1}/${self.getToday().getFullYear()+543} ดังนี้</div>
+                          <div>เรียน อกบช./ชกบช.(งานไฟฟ้า)/หบฟ./ชบฟ.(ชศ.)</div>
+                          <div>เรื่อง แจ้งผลการรับแจ้งและผลการตรวจแก้โทรศัพท์หมายเลขที่ขัดข้อง<div>
+                          <div style="margin-top: 1em; margin-left: 4em">การตรวจแก้ดี ประจำวันที่ ${self.getToday().getDate()}/${self.getToday().getMonth() + 1}/${self.getToday().getFullYear()+543} ดังนี้</div>
                           <p>
                           `
                         },

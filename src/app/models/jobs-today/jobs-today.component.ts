@@ -49,7 +49,27 @@ export class JobsTodayComponent implements AfterViewInit {
 
     let table = $('#jobs-today-table').DataTable({
       dom: 'Bfrtip',
-      buttons: ['copy', 'csv', 'excel', 'print'],
+      buttons: ['copy', 'csv', 'excel', {
+        extend: 'print',
+        title: '',
+        messageTop:     function() {
+                          return `
+                          <div>เรียน อกบช./ชกบช.(งานไฟฟ้า)/หบฟ./ชบฟ.(ชศ.)</div>
+                          <div>เรื่อง แจ้งผลการรับแจ้งและผลการตรวจแก้โทรศัพท์หมายเลขที่ขัดข้อง<div>
+                          <div style="margin-top: 1em; margin-left: 4em">การรับแจ้งโทรศัพท์ขัดข้อง ประจำวันที่ ${self.getToday().getDate()}/${self.getToday().getMonth() + 1}/${self.getToday().getFullYear()+543} ดังนี้</div>
+                          <p>
+                          `
+                        },
+        messageBottom:  function() {
+                          return `
+                          <div style="margin-top: 4em; text-align: center">
+                            <div>จึงเรียนมาเพื่อโปรดทราบ</div>
+                            <div style="margin-top: 3em">(.........................................)</div>
+                            <div>ช่างเทคนิค 4</div>
+                            <div>.........../.........../...........</div>
+                          </div>`
+                        }
+      }],
       columnDefs: [
         { targets: [0], width: '3rem', className: 'text-center' },
         { targets: [1,2,3,4], width: '8rem', className: 'text-center' },
@@ -115,6 +135,11 @@ export class JobsTodayComponent implements AfterViewInit {
       this.issues = rs;
       this.refreshTable();
     });
+  }
+
+  getToday() {
+    let today = new Date()
+    return today;
   }
 }
 
