@@ -44,12 +44,12 @@ export class ReportByStatusComponent implements AfterViewInit {
       frmdate.setMonth(frmdate.getMonth()-1);
       frmdate.setDate(1);
       this.frmDate = frmdate.toISOString().split('T')[0]; 
-
       this.toDate = new Date().toISOString().split('T')[0];
   }
 
   ngAfterViewInit(): void {
     this.initTable();
+    this.searchbydate();
   }
 
   initTable() {
