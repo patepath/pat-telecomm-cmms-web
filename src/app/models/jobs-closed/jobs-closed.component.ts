@@ -85,8 +85,10 @@ export class JobsClosedComponent implements AfterViewInit {
       }],
       columnDefs: [
         { targets: [0], width: '3rem', className: 'text-center' },
-        { targets: [1,2,3,4], width: '8rem', className: 'text-center' },
-        { targets: [-1,-2], width: '10rem', className: 'text-center' },
+        { targets: [2], width: '6rem', className: 'text-center' },
+        { targets: [1,3,4], width: '8rem', className: 'text-center' },
+        { targets: [-1], width: '10rem', className: 'text-center' },
+        { targets: [-2], width: '6rem', className: 'text-center' },
       ],
       responsive: true,
       language: {
@@ -126,10 +128,15 @@ export class JobsClosedComponent implements AfterViewInit {
 
     if(this.issues) {
       this.issues.forEach((s,i) => {
+        let date = new Date(s.created);
+        let hh = '00' + date.getHours();
+        let mm = '00' + date.getMinutes();
+        let ss = '00' + date.getSeconds();
+
         this.data.push([
           String(i+1),
           s.created.toString().split('T')[0],
-          s.created.toString().split('T')[1].split('+')[0],
+          `${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
           s.issueno,
           s.phone.number,
           s.phone.location,
