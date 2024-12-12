@@ -44,7 +44,7 @@ export class JobsClosedComponent implements AfterViewInit {
     this.data=[];
 
     this.start.setMonth(this.today.getMonth() - 3);
-    this.frmDate = this.start.toISOString().split('T')[0];
+    this.frmDate = this.today.toISOString().split('T')[0];
     this.toDate = this.today.toISOString().split('T')[0];
 
     let storage = localStorage.getItem('info');
