@@ -52,6 +52,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
 	public files: FileList = <FileList>{};
 	public filenames: string[]=[];
 	public isattach: boolean = false;
+  public issuetypename: string='';
 
 
   constructor(
@@ -88,6 +89,18 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
       if(parm) {
         this._issueServ.findById(this.info.token, parm['id']).subscribe(rs => {
           this.issue = rs;
+
+          let i = this.issueTypes.find(i => i.value == rs.issuetype);
+          if(i) {
+            if(rs.issuetype == 0) {
+              this.issuetypename = '- ไม่ได้เลือก -' 
+            } else {
+              this.issuetypename = i.name;
+            }
+          } else {
+            this.issuetypename = '';
+          }
+
           this.partusages = this.issue.partusages;
           this.techId = this.issue.tech == undefined ? 0 : this.issue.tech.id
 

@@ -5,10 +5,6 @@
         </div>
     </nav>
 
-    <div class="p-2">
-        <h1>{{issueType.name}}</h1>
-    </div>
-
     <div class="d-flex flex-wrap mb-2">
         <div class="form-group me-1" style="width: 10em">
             <label class="label label-default">เลขที่รับเรื่อง</label>
@@ -41,7 +37,7 @@
     <div class="d-flex flex-wrap mb-2">
         <div class="form-group mb-2 w-25">
             <label class="label label-default">ประเภทงาน</label>
-            <input class="form-control" [value]="issueTypes[issue.issuetype].name" disabled="true">
+            <input class="form-control" [value]="issuetypename" disabled="true">
         </div>
 
         <div class="form-group w-100">
