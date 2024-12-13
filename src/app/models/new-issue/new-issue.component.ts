@@ -171,18 +171,30 @@ export class NewIssueComponent implements AfterViewInit {
 			table.clear();
 			this.data = [];
 
+			console.log(this.issueTypes);
+
 			if(this.issues) {
 				this.issues.forEach(s => {
 					date = new Date(s.created.toString());
 					showdate = date.toISOString().split('T')[0]; 
 					showtime = date.toTimeString().split(' ')[0]; 
+					
+					let issuetypename = '';
+					let issuetype = this.issueTypes.find(i => i.value == s.issuetype);
+					if(issuetype) {
+						if(s.issuetype == 0) {
+							issuetypename = '- ไม่ได้เลือก -';
+						} else {
+							issuetypename = issuetype.name;
+						}
+					}
 
 					this.data.push([
 						showdate, 
 						showtime,
 						s.issueno,
 						s.phone.number + '', 
-						this.issueTypes[s.issuetype].name,
+						issuetypename,
 						s.issueby, 
 						s.issuecontactno,
 						this.getStatus(s.status)
@@ -217,6 +229,8 @@ export class NewIssueComponent implements AfterViewInit {
 
 	searchIssue() {
 		this._rptServ.findall(this.token).subscribe(rs => {
+			console.log(rs);
+
 			this.issues = rs;
 			this.refreshTable();
 		});
