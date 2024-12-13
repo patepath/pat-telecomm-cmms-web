@@ -15,7 +15,7 @@
 
                     <div class="p-2">
                         <label>รหัสผ่าน</label>
-                        <input type="password" class="form-control" [(ngModel)]="password" placeholder="รหัสผ่าน">
+                        <input type="password" class="form-control" [(ngModel)]="password" placeholder="รหัสผ่าน" (keydown.enter)="login()">
                     </div>
 
                     <div class="p-2" *ngIf="isInvalid">

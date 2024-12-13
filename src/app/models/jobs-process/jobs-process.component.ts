@@ -91,6 +91,7 @@ export class JobsProcessComponent implements AfterViewInit {
         { targets: [0], width: '3rem', className: 'text-center' },
         { targets: [2], width: '6rem', className: 'text-center' },
         { targets: [1,3,4], width: '8rem', className: 'text-center' },
+        { targets: [5], width: '18rem' },
         { targets: [-1], width: '10rem', className: 'text-center' },
         { targets: [-2], width: '6rem', className: 'text-center' },
       ],

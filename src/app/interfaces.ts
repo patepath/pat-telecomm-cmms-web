@@ -99,6 +99,13 @@ export interface Part {
   unit: string;
 }
 
+export interface PartProfile {
+  id: number;
+  rank: number;
+  code: string;
+  name: string;
+  unit: string;
+}
 export interface PartUsage {
   issueid: number;
   partid: number;

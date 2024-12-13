@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { APIfileAttach, FileAttachInfomation, Issue, IssueType, LoginInfo, Part, PartUsage, Phone, User } from '../../interfaces';
+import { APIfileAttach, FileAttachInfomation, Issue, IssueType, LoginInfo, Part, PartProfile, PartUsage, Phone, User } from '../../interfaces';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IssueService } from '../../services/issue.service';
 import { UserService } from '../../services/user.service';
@@ -34,13 +34,17 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
   public techs: User[]=[];
   public tech: User=<User>{}; 
   public techId?: number;
+
+  public partprofiles: PartProfile[]=[];
+  public partprofile: PartProfile=<PartProfile>{};
+
   public parts: Part[]=[];
   public part: Part=<Part>{};
   public partusages: PartUsage[]=[];
   public partusage: PartUsage=<PartUsage>{};
   public partInx: number = -1;
-  public info: LoginInfo=<LoginInfo>{};
 
+  public info: LoginInfo=<LoginInfo>{};
   public finishedDate: string='';
 	public previews: SafeResourceUrl[]=[];
 	public apiFileAttach: APIfileAttach=<APIfileAttach>{};
@@ -78,6 +82,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this._issueServ.getIssueTypes().subscribe(s => this.issueTypes=s);
     this._partServ.findall().subscribe(s => this.parts=s);
+    this._partServ.findallpartprofile().subscribe(s => this.partprofiles=s);
 
     this._activeRoute.params.subscribe(parm => {
       if(parm) {

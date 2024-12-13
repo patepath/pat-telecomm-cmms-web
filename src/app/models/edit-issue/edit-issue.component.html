@@ -187,7 +187,7 @@
             <div class="form-group mt-1">
                 <label>ชื่ออะไหล่</label>
                 <select class="form-select" [(ngModel)]="part" (ngModelChange)="changePart()">
-                    <option *ngFor="let opt of parts" [ngValue]="opt">{{opt.name}}</option>
+                    <option *ngFor="let opt of partprofiles" [ngValue]="opt">{{opt.name}}</option>
                 </select>
             </div>
 

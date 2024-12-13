@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LoginInfo, Part } from '../../interfaces';
+import { LoginInfo, Part, PartProfile } from '../../interfaces';
 import { PartService } from '../../services/part.service';
 
 declare interface DataTable {
@@ -22,8 +22,8 @@ declare let $:any;
 export class SettingPartComponent implements AfterViewInit {
   public dataTable!: DataTable;
 	public data!: string[][];
-  public parts: Part[]=[];
-  public part: Part=<Part>{};
+  public partprofiles: PartProfile[]=[];
+  public partprofile: PartProfile=<PartProfile>{};
   public token: string='';
 
   constructor(private readonly _partServ: PartService) {
@@ -44,19 +44,20 @@ export class SettingPartComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initTable();
+    this.search();
   }
 
   initTable() {
     let self = this;
 
-    let table = $('#part-table').DataTable({
+    let table = $('#partprofile-table').DataTable({
       dom: 'Bfrtip',
       buttons: [
         {
             text: 'New Part',
             action: function ( e: any, dt: any, node: any, config: any ) {
-              self.part=<Part>{};
-              self.part.id=0;
+              self.partprofile=<PartProfile>{};
+              self.partprofile.id=0;
               $('#partModal').modal('show');
             }
         },
@@ -72,6 +73,7 @@ export class SettingPartComponent implements AfterViewInit {
         search: "_INPUT_",
         searchPlaceholder: "Search records",
       },
+      ordering: false,
       paging: true,
       pageLength: 10,
       pagingType: "full_numbers",
@@ -96,16 +98,14 @@ export class SettingPartComponent implements AfterViewInit {
       //self.router.navigate(['admin/close-issue', self.reports[table.row(this).index()].id]);
       self.edit(table.row(this).index());
     });
-
-    self.search();
   }
 
   refreshTable() {
-    let table = $('#part-table').DataTable();
+    let table = $('#partprofile-table').DataTable();
     table.clear();
     this.data=[];
 
-    this.parts.forEach(s => {
+    this.partprofiles.forEach(s => {
       this.data.push([
         s.code,
         s.name,
@@ -118,11 +118,11 @@ export class SettingPartComponent implements AfterViewInit {
   }
 
   search() {
-    this._partServ.findall().subscribe(rs => {
+    this._partServ.findallpartprofile().subscribe(rs => {
       if(rs) {
-        this.parts=rs;
+        this.partprofiles=rs;
       } else {
-        this.parts=[];
+        this.partprofiles=[];
       }
 
       this.refreshTable();
@@ -130,12 +130,12 @@ export class SettingPartComponent implements AfterViewInit {
   }
 
   edit(inx: number) {
-    this.part = this.parts[inx];
+    this.partprofile = this.partprofiles[inx];
     $('#partModal').modal('show');
   }
 
   save() {
-    this._partServ.save(this.token, this.part).subscribe(rs => {
+    this._partServ.savepartprofile(this.token, this.partprofile).subscribe(rs => {
       this.search();
       $('#partModal').modal('hide');
     });

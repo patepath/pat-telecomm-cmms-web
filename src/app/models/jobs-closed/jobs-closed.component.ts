@@ -36,8 +36,8 @@ export class JobsClosedComponent implements AfterViewInit {
     private readonly _rptServ: JobsCompletedService,
     private readonly _router: Router) {
     this.dataTable = {
-      headerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'ความต้องการ/อาการเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
-      footerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'ความต้องการ/อาการเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
+      headerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'วันที่ปิดงาน', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'ความต้องการ/อาการเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
+      footerRow: ['ที่', 'วันที่รับเรื่อง', 'เวลา', 'วันที่ปิดงาน', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'สถานที่', 'ความต้องการ/อาการเสีย', 'เคเบิ้ล', 'หมายเลขติดต่อกลับ' ],
       dataRows: [],
     };
 
@@ -85,8 +85,9 @@ export class JobsClosedComponent implements AfterViewInit {
       }],
       columnDefs: [
         { targets: [0], width: '3rem', className: 'text-center' },
-        { targets: [2], width: '6rem', className: 'text-center' },
-        { targets: [1,3,4], width: '8rem', className: 'text-center' },
+        { targets: [2,4], width: '6rem', className: 'text-center' },
+        { targets: [1,3,5,6], width: '8rem', className: 'text-center' },
+        { targets: [7], width: '18rem'},
         { targets: [-1], width: '10rem', className: 'text-center' },
         { targets: [-2], width: '6rem', className: 'text-center' },
       ],
@@ -133,10 +134,17 @@ export class JobsClosedComponent implements AfterViewInit {
         let mm = '00' + date.getMinutes();
         let ss = '00' + date.getSeconds();
 
+        let finish = new Date(s.finisheddate);
+        let fhh = '00' + finish.getHours();
+        let fmm = '00' + finish.getMinutes();
+        let fss = '00' + finish.getSeconds();
+
         this.data.push([
           String(i+1),
           s.created.toString().split('T')[0],
           `${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
+          s.finisheddate.toString().split('T')[0],
+          `${fhh.substring(fhh.length-2)}:${fmm.substring(fmm.length-2)}:${fss.substring(fss.length-2)}`,
           s.issueno,
           s.phone.number,
           s.phone.location,
