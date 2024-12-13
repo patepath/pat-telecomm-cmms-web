@@ -171,8 +171,6 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
       $('#partModal').modal('show');
       //self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
     });
-
-    self.refreshTable();
   }
 
   refreshTable() {
