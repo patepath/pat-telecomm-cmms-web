@@ -52,6 +52,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
 	public files: FileList = <FileList>{};
 	public filenames: string[]=[];
 	public isattach: boolean = false;
+
   public issuetypename: string='';
 
 

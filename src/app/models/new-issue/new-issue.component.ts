@@ -57,7 +57,8 @@ export class NewIssueComponent implements AfterViewInit {
 	public apiFileAttach: APIfileAttach=<APIfileAttach>{};
 	public fileAttachs: FileAttachInfomation[]=[];
 	public isattach: boolean = false;
-	
+	public issuetype: number=0;
+
 	public issueFrm = new FormGroup({
 		id: new FormControl(0),
 		issueno: new FormControl(''),
@@ -171,8 +172,6 @@ export class NewIssueComponent implements AfterViewInit {
 			table.clear();
 			this.data = [];
 
-			console.log(this.issueTypes);
-
 			if(this.issues) {
 				this.issues.forEach(s => {
 					date = new Date(s.created.toString());
@@ -229,8 +228,6 @@ export class NewIssueComponent implements AfterViewInit {
 
 	searchIssue() {
 		this._rptServ.findall(this.token).subscribe(rs => {
-			console.log(rs);
-
 			this.issues = rs;
 			this.refreshTable();
 		});
