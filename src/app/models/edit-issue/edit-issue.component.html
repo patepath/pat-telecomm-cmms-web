@@ -144,7 +144,7 @@
 
 
     <div class="d-flex flex-col mt-3 mb-3">
-        @if(issue.status != 99) {
+        @if(issue.status != 1 && issue.status != 99) {
             <button class="btn btn-success me-1" (click)="save()">
                 <em class="fa fa-save"></em>
                 บันทึก
@@ -178,30 +178,35 @@
         <h5 class="modal-title" id="exampleModalLabel">ข้อมูลอะไหล่</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+
       <div class="modal-body">
         <div class="d-flex flex-column">
             <div class="form-group mt-1">
                 <label>ชื่ออะไหล่</label>
-                <select class="form-select" [(ngModel)]="part" (ngModelChange)="changePart()">
-                    <option *ngFor="let opt of partprofiles" [ngValue]="opt">{{opt.name}}</option>
+                <select class="form-select" [(ngModel)]="partid" (ngModelChange)="changePart()">
+                    <option *ngFor="let opt of partprofiles" [ngValue]="opt.id">{{opt.name}}</option>
                 </select>
             </div>
 
             <div class="form-group mt-1 w-50">
-                <label>ใช้จำนวน ({{partusage.unit}})</label>
-                <input type="number" class="form-control" [(ngModel)]="partusage.qty">
+                <label>ใช้จำนวน ({{partprofile.unit}})</label>
+                <input type="number" class="form-control" [(ngModel)]="part.qty">
             </div>
 
             <div class="form-group mt-1">
                 <label>หมายเหตุ</label>
-                <input type="text" class="form-control" [(ngModel)]="partusage.remark">
+                <input type="text" class="form-control" [(ngModel)]="part.remark">
             </div>
         </div>
       </div>
 
       <div class="modal-footer">
+        <!--
         <button type="button" class="btn btn-primary" (click)="appendpart()">{{partInx < 0 ? 'เพิ่มอะไหล่' : 'บันทึก'}}</button>
         <button type="button" class="btn btn-danger" (click)="removepart()" [disabled]="partInx < 0">ลบอะไหล่</button>
+        -->
+        <button type="button" class="btn btn-primary" (click)="appendpart()">บันทึก</button>
+        <button type="button" class="btn btn-danger" (click)="removepart()">ลบอะไหล่</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ออก</button>
       </div>
     </div>

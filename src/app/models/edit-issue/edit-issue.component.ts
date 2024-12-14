@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { APIfileAttach, FileAttachInfomation, Issue, IssueType, LoginInfo, Part, PartProfile, PartUsage, Phone, User } from '../../interfaces';
@@ -40,9 +40,8 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
 
   public parts: Part[]=[];
   public part: Part=<Part>{};
-  public partusages: PartUsage[]=[];
-  public partusage: PartUsage=<PartUsage>{};
-  public partInx: number = -1;
+  public partid: number=0;
+  public partCount: number=0;
 
   public info: LoginInfo=<LoginInfo>{};
   public finishedDate: string='';
@@ -54,7 +53,6 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
 	public isattach: boolean = false;
 
   public issuetypename: string='';
-
 
   constructor(
     private readonly _activeRoute: ActivatedRoute,
@@ -86,6 +84,17 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
     this._partServ.findall().subscribe(s => this.parts=s);
     this._partServ.findallpartprofile().subscribe(s => this.partprofiles=s);
 
+    this._userServ.gettech(this.info.token).subscribe(rs => {
+      this.techs = rs;   
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.initTable();
+    this.initFields();
+  }
+
+  initFields() {
     this._activeRoute.params.subscribe(parm => {
       if(parm) {
         this._issueServ.findById(this.info.token, parm['id']).subscribe(rs => {
@@ -102,7 +111,9 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
             this.issuetypename = '';
           }
 
-          this.partusages = this.issue.partusages;
+          this.parts = this.issue.parts;
+          this.refreshTable();
+
           this.techId = this.issue.tech == undefined ? 0 : this.issue.tech.id
 
           this._issueServ.checkfileattach(this.issue.issueno).subscribe(r => {
@@ -117,23 +128,6 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
         });
       }
     });
-
-    this._userServ.gettech(this.info.token).subscribe(rs => {
-      this.techs = rs;   
-    });
-
-    let today = new Date();
-    let year = today.getFullYear();
-    let month = '00' + (today.getMonth() + 1);
-    month = month.substring(month.length-2);
-    let date = '00' + today.getDate()
-    date = date.substring(date.length -2);
-
-    this.finishedDate = `${year}-${month}-${date}` 
-  }
-
-  ngAfterViewInit(): void {
-    this.initTable();
   }
 
   initTable() {
@@ -145,9 +139,8 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
         {
             text: 'เพิ่มอะไหล่',
             action: function ( e: any, dt: any, node: any, config: any ) {
-              self.partusage = <PartUsage>{};
-              self.partusage.remark = '';
-              self.partInx = -1;
+              self.part = <Part>{};
+              self.part.remark='';
               $('#partModal').modal('show');
             }
         },
@@ -178,12 +171,9 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
 
     table.on('click', 'td', function(this: any) {
       let $tr = $(this).closest('tr');
-      //self.issue = self.issues[table.row($tr).index()];
-      self.partInx = table.row($tr).index();
-      self.partusage = self.partusages[self.partInx];
-      self.part = self.parts[self.partInx];
+      self.part = self.parts[table.row($tr).index()]
+      self.partid = self.part.partprofileid;
       $('#partModal').modal('show');
-      //self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
     });
   }
 
@@ -192,7 +182,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
     table.clear();
     this.data=[];
 
-    this.partusages.forEach((s,i) => {
+    this.parts.forEach((s,i) => {
       this.data.push([
         String(i+1),
         s.name,
@@ -228,12 +218,10 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
 	}
 
   changePart() {
-    this.partusage.issueid = this.issue.id;
-    this.partusage.partid = this.part.id;
-    this.partusage.rank = this.partusages.length + 1;
-    this.partusage.code = this.part.code;
-    this.partusage.name = this.part.name;
-    this.partusage.unit = this.part.unit;
+    let partprofile = this.partprofiles.find(s => s.id == this.partid);
+    if(partprofile) {
+      this.partprofile = partprofile;
+    }
   }
 
   print() {
@@ -253,19 +241,25 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
   }
 
   appendpart() {
-    if(this.partInx < 0) {
-      this.partusages.push(this.partusage);
-    } else {
-      this.partusages[this.partInx] = this.partusage;
-    } 
+    let partprofile = this.partprofiles.find(s => s.id == this.partid);
+    if(partprofile) {
+      this.part.issueid = this.issue.id;
+      this.part.partprofileid = partprofile.id;
+      this.part.code = partprofile.code;
+      this.part.name = partprofile.name;
+      this.part.unit = partprofile.unit;
 
-    this.refreshTable();
-    $('#partModal').modal('hide');
+      this.parts.push(this.part);     
+      this.refreshTable();
+      $('#partModal').modal('hide');
+    }
+
   }
 
   removepart() {
-    if(this.partInx > -1) {
-      this.partusages.splice(this.partInx, 1);
+    if(this.part.partprofileid > 0) {
+      let inx = this.parts.findIndex(s => s.partprofileid == this.partid);
+      this.parts.splice(inx, 1);
       this.refreshTable();
       $('#partModal').modal('hide');
     }
@@ -283,10 +277,10 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
 	}
 
   save() {
-    this.issue.partusages = this.partusages;
+    this.issue.parts = this.parts;
     this.issue.tech = this.techs.find(val => val.id == this.techId);
 
-    this._issueServ.save(this.info.token, this.issue, false, this.isattach).subscribe(rs => {
+    this._issueServ.save(this.info.token, this.issue, this.isattach).subscribe(rs => {
 			if(this.isattach) {
 				this.upload();
 			}
@@ -300,18 +294,17 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
     this.issue.finisheddate = new Date();
     this.issue.tech = this.techs.find(val => val.id == this.techId);
 
-    this._issueServ.save(this.info.token, this.issue, false, true).subscribe(rs => {
+    this._issueServ.save(this.info.token, this.issue, false).subscribe(rs => {
       history.back();
     });
   }
 
   approve() {
     this.issue.status = 1;
-    this.issue.partusages = this.partusages;
     this.issue.finisheddate = new Date();
     this.issue.tech = this.techs.find(val => val.id == this.techId);
 
-    this._issueServ.save(this.info.token, this.issue, false, true).subscribe(rs => {
+    this._issueServ.save(this.info.token, this.issue, false).subscribe(rs => {
       history.back();
     });
   }
@@ -321,7 +314,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
       this.issue.status = 99;
       this.issue.finisheddate = new Date();
 
-      this._issueServ.save(this.info.token, this.issue, false, true).subscribe(rs => {
+      this._issueServ.save(this.info.token, this.issue, false).subscribe(rs => {
         history.back();
       });
     } 

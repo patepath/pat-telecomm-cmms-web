@@ -26,11 +26,11 @@ export class IssueService {
     ]);
   }
 
-  save(token: string, issue: Issue, isattach: boolean, isparts: boolean): Observable<APIResult> {
+  save(token: string, issue: Issue, isattach: boolean): Observable<APIResult> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
     let options = { headers: headers };
     let body = issue
-    return this._http.post<APIResult>(`${URLAPI}/issue/save/${token}/${isattach}/${isparts}`, body, options)
+    return this._http.post<APIResult>(`${URLAPI}/issue/save/${token}/${isattach}`, body, options)
   }
 
   checkfileattach(issueno: string): Observable<APIfileAttach> { 

@@ -74,20 +74,20 @@ export class ReportByStatusComponent implements AfterViewInit {
       pagingType: "full_numbers",
     });
 
-    table.on('mouseover', 'tr', function(this: any) {
-      $(this).css('cursor', 'pointer');
-      $(this).css('font-weight', 'bold');
-    });
-
-    table.on('mouseout', 'tr', function(this: any) {
-      $(this).css('font-weight', 'normal');
-    });
-
-    table.on('click', 'td', function(this: any) {
-      let $tr = $(this).closest('tr');
-      //self.issue = self.issues[table.row($tr).index()];
-      //self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
-    });
+//    table.on('mouseover', 'tr', function(this: any) {
+//      $(this).css('cursor', 'pointer');
+//      $(this).css('font-weight', 'bold');
+//    });
+//
+//    table.on('mouseout', 'tr', function(this: any) {
+//      $(this).css('font-weight', 'normal');
+//    });
+//
+//    table.on('click', 'td', function(this: any) {
+//      let $tr = $(this).closest('tr');
+//      //self.issue = self.issues[table.row($tr).index()];
+//      //self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
+//    });
   }
 
   refreshTable() {

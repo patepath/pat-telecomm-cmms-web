@@ -40,7 +40,7 @@ export interface Issue {
     ext: string;
     finisheddate: Date;
     status: number;
-    partusages: PartUsage[];
+    parts: Part[];
 }
 
 export interface APIfileAttach {
@@ -92,11 +92,14 @@ export interface User {
 }
 
 export interface Part {
-  id: number;
+  issueid: number;
+  partprofileid: number;
+  rank: number;
   code: string;
   name: string;
   qty: number;
   unit: string;
+  remark: string;
 }
 
 export interface PartProfile {

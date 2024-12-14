@@ -1,7 +1,7 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { FormsModule, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { APIfileAttach, Category, Department, Equipment, FileAttachInfomation, Group, Issue, IssueType, LoginInfo, Phone, User } from '../../interfaces';
+import { APIfileAttach, Category, Department, Equipment, FileAttachInfomation, Group, Issue, IssueType, LoginInfo, Part, Phone, User } from '../../interfaces';
 import { IssueService } from '../../services/issue.service';
 import { Subject, debounceTime, filter, switchMap } from 'rxjs';
 import { PhoneService } from '../../services/phone.service';
@@ -35,6 +35,7 @@ export class NewIssueComponent implements AfterViewInit {
 	public issue: Issue=<Issue>{}
 	public issues: Issue[]=[];
 	public issueTypes: IssueType[]=[];
+	public parts: Part[]=[];
 	public dept: Department=<Department>{}
 	public depts: Department[]=[];
 	public group: Group=<Group>{};
@@ -124,6 +125,7 @@ export class NewIssueComponent implements AfterViewInit {
 
 	ngAfterViewInit(): void {
 		this.initTable();
+		this.searchIssue();
 	}
 
 	initTable() {
@@ -155,11 +157,9 @@ export class NewIssueComponent implements AfterViewInit {
 			$(this).css('font-weight', 'normal');
 		});
 
-		table.on('click', 'td', function(this: any) {
+		table.on('click', 'tr', function(this: any) {
 			self.editIssue(table.row(this).index());
 		});
-
-		self.searchIssue();
 	}
 
 	refreshTable() {
@@ -235,34 +235,39 @@ export class NewIssueComponent implements AfterViewInit {
 	
 	editIssue(inx: number) {
 		this.issue = this.issues[inx];
-		document.getElementById('search')?.setAttribute('value', this.issue.phone.number);
-		this.phones = [];
-		this.phones.push(this.issue.phone);
 
-		this.issueFrm.get('id')?.setValue(this.issue.id);
-		this.issueFrm.get('issueno')?.setValue(this.issue.issueno);
-		this.issueFrm.get('created')?.setValue(this.issue.created);
-		this.issueFrm.get('issuetype')?.setValue(this.issue.issuetype);
-		this.issueFrm.get('issuetypeother')?.setValue(this.issue.issuetypeother);
-		this.issueFrm.get('phone')?.setValue(this.issue.phone);
-		this.issueFrm.get('issueby')?.setValue(this.issue.issueby);
-		this.issueFrm.get('issuecontactno')?.setValue(this.issue.issuecontactno);
-		this.issueFrm.get('issuedescription')?.setValue(this.issue.issuedescription);
-		this.issueFrm.get('issuecause')?.setValue(this.issue.issuecause);
-		this.issueFrm.get('issuesolution')?.setValue(this.issue.issuesolution);
-		this.issueFrm.get('partusages')?.setValue(this.issue.partusages);
-		this.issueFrm.get('engineercode')?.setValue(this.issue.engineercode);
-		this.issueFrm.get('tech')?.setValue(this.issue.tech == null ? <User>{} : this.issue.tech);
-		this.issueFrm.get('finisheddate')?.setValue(this.issue.finisheddate);
-		this.issueFrm.get('status')?.setValue(this.issue.status);
+		this._issueServ.findById(this.token, this.issue.id).subscribe(s => { // For get part list.
+			this.issue = s;
 
-		this._issueServ.checkfileattach(this.issue.issueno).subscribe(r => {
-			this.apiFileAttach = r;
-			this.fileAttachs = this.apiFileAttach.data;
+			document.getElementById('search')?.setAttribute('value', this.issue.phone.number);
+			this.parts = this.issue.parts;
+			this.phones = [];
+			this.phones.push(this.issue.phone);
 
-			this.previews = [];
-			this.fileAttachs.forEach(s => {
-				this.previews.push(this._sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' +s.b64));
+			this.issueFrm.get('id')?.setValue(this.issue.id);
+			this.issueFrm.get('issueno')?.setValue(this.issue.issueno);
+			this.issueFrm.get('created')?.setValue(this.issue.created);
+			this.issueFrm.get('issuetype')?.setValue(this.issue.issuetype);
+			this.issueFrm.get('issuetypeother')?.setValue(this.issue.issuetypeother);
+			this.issueFrm.get('phone')?.setValue(this.issue.phone);
+			this.issueFrm.get('issueby')?.setValue(this.issue.issueby);
+			this.issueFrm.get('issuecontactno')?.setValue(this.issue.issuecontactno);
+			this.issueFrm.get('issuedescription')?.setValue(this.issue.issuedescription);
+			this.issueFrm.get('issuecause')?.setValue(this.issue.issuecause);
+			this.issueFrm.get('issuesolution')?.setValue(this.issue.issuesolution);
+			this.issueFrm.get('engineercode')?.setValue(this.issue.engineercode);
+			this.issueFrm.get('tech')?.setValue(this.issue.tech == null ? <User>{} : this.issue.tech);
+			this.issueFrm.get('finisheddate')?.setValue(this.issue.finisheddate);
+			this.issueFrm.get('status')?.setValue(this.issue.status);
+
+			this._issueServ.checkfileattach(this.issue.issueno).subscribe(r => {
+				this.apiFileAttach = r;
+				this.fileAttachs = this.apiFileAttach.data;
+
+				this.previews = [];
+				this.fileAttachs.forEach(s => {
+					this.previews.push(this._sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' +s.b64));
+				});
 			});
 		});
 	}
@@ -289,6 +294,7 @@ export class NewIssueComponent implements AfterViewInit {
 		this.issue = <Issue>{}
 		this.issue.id = 0;
 		this.issue.status=0;
+		this.parts=[];
 		this.phones = [];
 		this.files = <FileList>{};
 		this.filenames = [];
@@ -337,9 +343,10 @@ export class NewIssueComponent implements AfterViewInit {
 
 		this.issue = <Issue> this.issueFrm.value;
 		this.issue.issuetype = Number(this.issueFrm.get('issuetype')?.value);
+		this.issue.parts = this.parts;
 		this.issue.status = Number(this.issueFrm.get('status')?.value);
 
-		this._issueServ.save(this.token, this.issue, this.isattach, false).subscribe(rs => {
+		this._issueServ.save(this.token, this.issue, this.isattach).subscribe(rs => {
 			this.issue.issueno = rs.issueno;
 			if(this.isattach) {
 				this.upload();
