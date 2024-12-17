@@ -133,8 +133,10 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
   initTable() {
     let self = this;
 
+    console.log(self.issue.status);
+    
     let table = $('#part-usage-table').DataTable({
-      dom: 'Bfrtip',
+      dom: 'frtip',
       buttons: [
         {
             text: 'เพิ่มอะไหล่',
@@ -196,6 +198,7 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
     table.draw();
   }
 
+
 	onFileSelect(event: any) {
 		this.files = (event.target as HTMLInputElement).files!;
 
@@ -216,6 +219,12 @@ export class EditIssueComponent implements OnInit, AfterViewInit {
 			}
 		}
 	}
+
+  newPart() {
+    this.part = <Part>{};
+    this.part.remark='';
+    $('#partModal').modal('show');
+  }
 
   changePart() {
     let partprofile = this.partprofiles.find(s => s.id == this.partid);
