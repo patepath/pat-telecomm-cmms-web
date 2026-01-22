@@ -1,13 +1,14 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { FormsModule, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { APIfileAttach, Category, Department, Equipment, FileAttachInfomation, Group, Issue, IssueType, LoginInfo, Part, Phone, User } from '../../interfaces';
+import { APIfileAttach, Category, Department, Equipment, FileAttachInfomation, Group, Issue, IssueType, LoginInfo, Operator, Part, Phone, User } from '../../interfaces';
 import { IssueService } from '../../services/issue.service';
 import { Subject, debounceTime, filter, switchMap } from 'rxjs';
 import { PhoneService } from '../../services/phone.service';
 import { JobsProcessService } from '../../services/jobs-process.service';
 import { Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { OperatorService } from '../../services/operator.service';
 
 declare interface DataTable {
     headerRow: string[];
@@ -46,8 +47,16 @@ export class NewIssueComponent implements AfterViewInit {
 	public categories: Category[]=[];
 	public phones: Phone[]=[];
 	public phone: Phone=<Phone>{};
+
+	public operator: Operator=<Operator>{};
+	public operators: Operator[]=[];
+
 	public search: string='';
 	public onSearchPhone$ = new Subject<string>();
+
+	public searchPhoneBy: string='';
+	public onSearchPhoneBy$ = new Subject<string>();
+	
 	public token: string='';
 	public role: number=0;
 
@@ -88,6 +97,7 @@ export class NewIssueComponent implements AfterViewInit {
 		private readonly _router: Router,
 		private readonly _issueServ: IssueService,
 		private readonly _phoneServ: PhoneService,
+		private readonly _operatorServ: OperatorService,	
 		private readonly _rptServ: JobsProcessService,
 		private _sanitizer: DomSanitizer) {
 
@@ -124,7 +134,21 @@ export class NewIssueComponent implements AfterViewInit {
 			if(this.phones.length == 1) {
 				this.issue.phone = this.phones[0];
 			}
-		})
+		});
+
+		this.onSearchPhoneBy$
+		.pipe(
+			filter(val => val.length > 2),
+			debounceTime(600),
+			switchMap(val =>  { return this._operatorServ.findByPhone(val) })
+		)
+		.subscribe(val => {
+			this.operators=val;
+
+			if(this.operators.length == 1) {
+				this.issue.phoneby = this.operators[0].phonenumber;
+			}
+		});
 	}
 
 	ngAfterViewInit(): void {
@@ -280,11 +304,20 @@ export class NewIssueComponent implements AfterViewInit {
 		this.onSearchPhone$.next(search);
 	}
 
+	searchPhoneby(search: string) {
+		this.onSearchPhoneBy$.next(search);
+	}
+
 	changeLocation() {
 		var search: HTMLInputElement = <HTMLInputElement>document.getElementById('search');
 		var phone: Phone = <Phone>this.issueFrm.get('phone')?.value
 
 		search.value = phone == null ? '' : phone.number;	
+	}
+
+	changeIssueLocation() {
+		var issueLocation: HTMLSelectElement = <HTMLSelectElement>document.getElementById('issueLocation');
+		this.issueFrm.get('issuecontactno')?.setValue(this.operators[issueLocation.selectedIndex].phonenumber);
 	}
 
 	newIssue() {

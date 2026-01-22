@@ -54,14 +54,16 @@
         </div>
 
         <div class="d-flex flex-row mb-2">
-            <div class="form-group me-1 w-25">
+            <div class="form-group me-1">
                 <label class="label label-default">หมายเลขโทรศัพท์ติดต่อ</label>
-                <input class="form-control" formControlName="issuecontactno">
+                <input class="form-control" formControlName="issuecontactno" #searchPhoneBy (keyup)="searchPhoneby(searchPhoneBy.value)">
             </div>
 
             <div class="form-group me-1">
                 <label class="label label-default">สถานที่/แผนก</label>
-                <input class="form-control" formControlName="issuelocation">
+                <select class="form-select" formControlName="issuelocation" id="issueLocation" (change)="changeIssueLocation()">
+                    <option *ngFor="let opt of operators" [value]="opt.organization + '/' + opt.unit">{{opt.organization + '/' + opt.unit}}</option>
+                </select>
             </div>
 
             <div class="form-group me-1">

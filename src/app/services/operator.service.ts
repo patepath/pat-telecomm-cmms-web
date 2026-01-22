@@ -17,6 +17,10 @@ export class OperatorService {
     return this._http.get<Operator[]>(`${URLAPI}/operator/findall`);
   }
 
+  findByPhone(phonenumber: string): Observable<Operator[]> {
+    return this._http.get<Operator[]>(`${URLAPI}/operator/findbyphone/${phonenumber}`);
+  }
+
   save(token: string, operator: Operator): Observable<APIResult> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
     let options = { headers: headers };
