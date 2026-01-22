@@ -148,6 +148,9 @@ export class SettingUserComponent implements AfterViewInit {
 
       case 3:
         return "หัวหน้าฝ่าย";
+
+      case 4:
+        return "เจ้าหน้าที่สลับสาย";
     }
 
     return "";

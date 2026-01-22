@@ -51,6 +51,10 @@ export class LoginComponent implements AfterViewInit {
       case 2:
         this.router.navigate(['/tech/new-issue']);
         break;
+
+      case 4:
+        this.router.navigate(['/operator/new-issue']);
+        break;
     }
   }
 

@@ -1,0 +1,78 @@
+<div class="container-fluid overflow-auto">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">ข้อมูลหมายเลข</span>
+        </div>
+    </nav>
+
+    <div class="contianer-fluid p-2">
+        <table id="operator-table" class="table table-hover">
+            <caption></caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable.footerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="operatorModal" tabindex="-1" aria-labelledby="operatorModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ข้อมูลหมายเลข</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column">
+            <div class="form-group">
+                <label>หมายเลข</label>
+                <input type="text" class="form-control" [(ngModel)]="operator.phonenumber" [disabled]="info.role === 2">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>หมายเลขข้างเคียง</label>
+                <textarea class="form-control" [(ngModel)]="operator.nearbynumber" [disabled]="info.role === 2"></textarea>
+            </div>
+            
+            <div class="form-group mt-2">
+                <label>ชื่อบุคคล</label>
+                <input type="text" class="form-control" [(ngModel)]="operator.staffname" [disabled]="info.role === 2">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>ตำแหน่ง</label>
+                <input type="text" class="form-control" [(ngModel)]="operator.position" [disabled]="info.role === 2">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>หน่วยงาน</label>
+                <input type="text" class="form-control" [(ngModel)]="operator.organization">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>กอง</label>
+                <input type="text" class="form-control" [(ngModel)]="operator.division">
+            </div>
+
+            <div class="form-group mt-2">
+                <label>ฝ่าย</label>
+                <input type="text" class="form-control" [(ngModel)]="operator.department">
+            </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="save()">บันทึก</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ออก</button>
+      </div>
+    </div>
+  </div>
+</div>

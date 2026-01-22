@@ -49,6 +49,7 @@ export class NewIssueComponent implements AfterViewInit {
 	public search: string='';
 	public onSearchPhone$ = new Subject<string>();
 	public token: string='';
+	public role: number=0;
 
 	public selectedFile: File | null = null;
 	public files: FileList = <FileList>{};
@@ -64,6 +65,7 @@ export class NewIssueComponent implements AfterViewInit {
 		id: new FormControl(0),
 		issueno: new FormControl(''),
 		phone: new FormControl(<Phone>{}, Validators.required),
+		phoneby: new FormControl('' ),
 		tech: new FormControl(<User>{}),
 		created: new FormControl(new Date()),
 		issuetype: new FormControl(0, Validators.min(1)),
@@ -71,6 +73,7 @@ export class NewIssueComponent implements AfterViewInit {
 		issueby: new FormControl('', Validators.required),
 		issuecontactno: new FormControl('', Validators.required),
 		issuedescription: new FormControl('', Validators.required),
+		issuelocation: new FormControl(''),
 		issuecause: new FormControl(),
 		issuesolution: new FormControl(),
 		engineercode: new FormControl(),
@@ -89,8 +92,8 @@ export class NewIssueComponent implements AfterViewInit {
 		private _sanitizer: DomSanitizer) {
 
 		this.dataTable = {
-			headerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'หมายเลข', 'ประเภทงาน', 'ชื่อผู้แจ้ง', 'โทรศัพท์ติดต่อ', 'สถานะ' ],
-			footerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'หมายเลข', 'ประเภทงาน', 'ชื่อผู้แจ้ง', 'โทรศัพท์ติดต่อ', 'สถานะ' ],
+			headerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'สายโทรเข้า', 'ประเภทงาน', 'โทรศัพท์ติดต่อ' ],
+			footerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'สายโทรเข้า', 'ประเภทงาน', 'โทรศัพท์ติดต่อ' ],
 			dataRows: [],
 		};
 
@@ -100,6 +103,7 @@ export class NewIssueComponent implements AfterViewInit {
 		let storage = localStorage.getItem('info');
 		if(storage) {
 			let info: LoginInfo = JSON.parse(storage);
+			this.role = info.role;
 			this.token = info.token;
 		}
 
@@ -136,7 +140,7 @@ export class NewIssueComponent implements AfterViewInit {
 			buttons: ['copy', 'csv', 'excel', 'print'],
 			columnDefs: [
 				{ target: [0,1,2,3], width: '8rem', className: 'text-center' },
-				{ target: [-1, -2, -3], width: '10rem', className: 'text-center' },
+				{ target: [-1], width: '10rem', className: 'text-center' },
 			],
 			responsive: true,
 			language: {
@@ -194,9 +198,7 @@ export class NewIssueComponent implements AfterViewInit {
 						s.issueno,
 						s.phone.number + '', 
 						issuetypename,
-						s.issueby, 
 						s.issuecontactno,
-						this.getStatus(s.status)
 					]);
 				});
 			}
@@ -250,9 +252,11 @@ export class NewIssueComponent implements AfterViewInit {
 			this.issueFrm.get('issuetype')?.setValue(this.issue.issuetype);
 			this.issueFrm.get('issuetypeother')?.setValue(this.issue.issuetypeother);
 			this.issueFrm.get('phone')?.setValue(this.issue.phone);
+			this.issueFrm.get('phoneby')?.setValue(this.issue.phoneby);
 			this.issueFrm.get('issueby')?.setValue(this.issue.issueby);
 			this.issueFrm.get('issuecontactno')?.setValue(this.issue.issuecontactno);
 			this.issueFrm.get('issuedescription')?.setValue(this.issue.issuedescription);
+			this.issueFrm.get('issuelocation')?.setValue(this.issue.issuelocation);
 			this.issueFrm.get('issuecause')?.setValue(this.issue.issuecause);
 			this.issueFrm.get('issuesolution')?.setValue(this.issue.issuesolution);
 			this.issueFrm.get('engineercode')?.setValue(this.issue.engineercode);

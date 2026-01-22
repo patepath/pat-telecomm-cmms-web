@@ -3,13 +3,14 @@ import { DefaultLayoutComponent } from './layout/default-layout/default-layout.c
 import { NewIssueComponent } from './models/new-issue/new-issue.component';
 import { JobsTodayComponent } from './models/jobs-today/jobs-today.component';
 import { JobsProcessComponent } from './models/jobs-process/jobs-process.component';
-import { JobsWaitForCloseComponent } from './models/jobs-wait-for-close/jobs-wait-for-close.component';
 import { JobsClosedComponent } from './models/jobs-closed/jobs-closed.component';
+import { JobsClosedTechComponent } from './models/jobs-closed-tech/jobs-closed-tech.component';
 import { LoginComponent } from './models/login/login.component';
 import { SettingUserComponent } from './models/setting-user/setting-user.component';
 import { SettingDepartmentComponent } from './models/setting-department/setting-department.component';
 import { SettingPhoneComponent } from './models/setting-phone/setting-phone.component';
 import { SettingPartComponent } from './models/setting-part/setting-part.component';
+import { SettingLineswapComponent } from './models/setting-lineswap/setting-lineswap.component';
 import { EditIssueComponent } from './models/edit-issue/edit-issue.component';
 import { PrnNewissueComponent } from './models/prn-newissue/prn-newissue.component';
 import { ReportByStatusComponent } from './models/report-by-status/report-by-status.component';
@@ -44,9 +45,19 @@ export const routes: Routes = [
         children: [
             { path: 'new-issue', component: NewIssueComponent },
             { path: 'jobs-today', component: JobsTodayComponent },
-            { path: 'jobs-process', component: JobsProcessComponent },
-            { path: 'jobs-closed', component: JobsClosedComponent },
+            { path: 'jobs-closed-tech', component: JobsClosedTechComponent },
             { path: 'setting-phone', component: SettingPhoneComponent },
+        ]
+    },
+    {
+        path: 'operator',
+        component: DefaultLayoutComponent,
+        children: [
+            { path: 'new-issue', component: NewIssueComponent },
+            { path: 'jobs-today', component: JobsTodayComponent },
+            { path: 'jobs-closed-tech', component: JobsClosedTechComponent },
+            { path: 'setting-phone', component: SettingPhoneComponent },
+            { path: 'setting-lineswap', component: SettingLineswapComponent },
         ]
     }
 ];

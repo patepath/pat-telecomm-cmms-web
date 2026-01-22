@@ -27,12 +27,14 @@ export interface Issue {
     id: number;
     issueno: string;
     phone: Phone;
+    phoneby: string;
     tech?: User;
     created: Date;
     issuetype: number;
     issuetypeother: string;
     issueby: string;
     issuecontactno: string;
+    issuelocation: string;
     issuedescription: string;
     issuecause: string;
     issuesolution: string;
@@ -150,4 +152,16 @@ export interface Profile {
   position5: string;
   name6: string;
   position6: string;
+}
+
+export interface Operator {
+	id: number
+	phonenumber: string;
+	nearbynumber: string;
+	staffname: string;
+	position: string;
+	unit: string;
+	department: string;
+	division: string;
+	organization: string;
 }
