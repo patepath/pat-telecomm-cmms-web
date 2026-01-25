@@ -53,7 +53,7 @@ export class LoginComponent implements AfterViewInit {
         break;
 
       case 4:
-        this.router.navigate(['/operator/new-issue']);
+        this.router.navigate(['/operator/new-lineswapissue']);
         break;
     }
   }

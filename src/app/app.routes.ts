@@ -16,6 +16,7 @@ import { PrnNewissueComponent } from './models/prn-newissue/prn-newissue.compone
 import { ReportByStatusComponent } from './models/report-by-status/report-by-status.component';
 import { ReportBySummaryComponent } from './models/report-by-summary/report-by-summary.component';
 import { ProfileComponent } from './models/profile/profile.component';
+import { LineswapNewIssueComponent } from './models/lineswap-new-issue/lineswap-new-issue.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent},
@@ -53,7 +54,7 @@ export const routes: Routes = [
         path: 'operator',
         component: DefaultLayoutComponent,
         children: [
-            { path: 'new-issue', component: NewIssueComponent },
+            { path: 'new-lineswapissue', component: LineswapNewIssueComponent },
             { path: 'jobs-today', component: JobsTodayComponent },
             { path: 'jobs-closed-tech', component: JobsClosedTechComponent },
             { path: 'setting-phone', component: SettingPhoneComponent },

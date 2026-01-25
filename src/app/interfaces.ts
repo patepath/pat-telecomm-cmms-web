@@ -45,6 +45,25 @@ export interface Issue {
     parts: Part[];
 }
 
+export interface LineswapIssue {
+    id: number;
+    issueno: string;
+    phone: Phone;
+    phoneby: string;
+    created: Date;
+    issuetype: number;
+    issuetypeother: string;
+    issueby: string;
+    issuecontactno: string;
+    issuelocation: string;
+    issuedescription: string;
+    issuecause: string;
+    issuesolution: string;
+    engineercode: string;
+    ext: string;
+    finisheddate: Date;
+    status: number;
+}
 export interface APIfileAttach {
   success: boolean;
   issue: string;

@@ -179,6 +179,13 @@
               </li>
 
               <li class="nav-item">
+                  <a [routerLink]="['/operator/setting-lineswap']" class="nav-link text-white" [ngClass]="{'active': loc === 'setting-lineswap'}" aria-current="page">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#db"/></svg>
+                      ข้อมูลสลับสาย
+                  </a>
+              </li>
+
+              <li class="nav-item">
                   <a [routerLink]="['/admin/setting-part']" class="nav-link text-white" [ngClass]="{'active': loc === 'setting-part'}" aria-current="page">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#gear-fill"/></svg>
                       รายการอะไหล่
@@ -222,6 +229,13 @@
           }
           @case (4) {
           <ul class="nav nav-pills flex-column mb-auto">
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/new-lineswapissue']" class="nav-link text-white" [ngClass]="{'active': loc === 'new-lineswapissue'}" aria-current="page">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#recv-phone"/></svg>
+                      รับเรื่องสลับสาย 
+                  </a>
+              </li>
+
               <li class="nav-item">
                   <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
