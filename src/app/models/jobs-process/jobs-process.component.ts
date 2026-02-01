@@ -104,6 +104,7 @@ export class JobsProcessComponent implements AfterViewInit {
       paging: true,
       pageLength: 10,
       pagingType: "full_numbers",
+      lenghtMenu: [10, 25, 50, 100],
     });
 
     table.on('mouseover', 'tr', function(this: any) {

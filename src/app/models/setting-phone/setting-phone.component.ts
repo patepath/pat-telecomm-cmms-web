@@ -50,7 +50,7 @@ export class SettingPhoneComponent implements AfterViewInit {
     let self = this;
 
     let table = $('#phone-table').DataTable({
-      dom: 'Bfrtip',
+      dom: 'Bfrtlp',
       buttons: [
         {
             text: 'New Phone',
@@ -70,10 +70,13 @@ export class SettingPhoneComponent implements AfterViewInit {
         search: "_INPUT_",
         searchPlaceholder: "Search records",
       },
-      ordering: false,
+      ordering: true,
+      order: [0, 'asc'],
       paging: true,
-      pageLength: 15,
+      pageLength: 10,
       pagingType: "full_numbers",
+      lengthChange: true,
+      lengthMenu: [5, 10, 15, 20],
     });
 
     table.on('mouseover', 'tr', function(this: any) {

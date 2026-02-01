@@ -8,6 +8,7 @@ import { OperatorService } from '../../services/operator.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { LineswapService } from '../../services/lineswap.service';
+import { LineswapFinishedService } from '../../services/lineswap-finished.service';
 
 declare interface DataTable {
     headerRow: string[];
@@ -24,7 +25,7 @@ declare let $:any;
   templateUrl: './lineswap-new-issue.component.html',
   styleUrl: './lineswap-new-issue.component.css'
 })
-export class LineswapNewIssueComponent {
+export class LineswapNewIssueComponent implements AfterViewInit {
 	public dataTable!: DataTable;
 	public data!: string[][];
 	public issueTypes: IssueType[]=[];
@@ -47,17 +48,13 @@ export class LineswapNewIssueComponent {
 	public lineswapIssueFrm: FormGroup; 
 	public lineswapIssue: LineswapIssue=<LineswapIssue>{}
 
-	public selectedFile: File | null = null;
-	public files: FileList = <FileList>{};
-	public filenames: string[]=[];
-	public previews: SafeResourceUrl[]=[];
-	
-	public apiFileAttach: APIfileAttach=<APIfileAttach>{};
-	public fileAttachs: FileAttachInfomation[]=[];
-	public isattach: boolean = false;
-  
+	public issue: LineswapIssue=<LineswapIssue>{}
+	public issues: LineswapIssue[]=[];
+	public info: LoginInfo=<LoginInfo>{}
+
 	constructor(
 		private readonly _router: Router,
+		private readonly _rptServ: LineswapFinishedService,
 		private readonly _lineswpServ: LineswapService,
 		private readonly _phoneServ: PhoneService,
 		private readonly _operatorServ: OperatorService
@@ -132,6 +129,78 @@ export class LineswapNewIssueComponent {
 				this.lineswapIssueFrm.get('phoneby')?.setValue(this.operators[0].phonenumber);
 			}
 		});
+
+	}
+
+	ngAfterViewInit(): void {
+		this.initTable();
+	}
+
+	initTable() {
+		let self = this;
+
+		let table = $('#new-issue-table').DataTable({
+			dom: 'Bfrtp',
+			buttons: ['copy', 'csv', 'excel', { 
+				extend: 'print',
+				title: '',
+				messageTop:     function() {
+								return `
+								<div>เรียน อกบช./ชกบช.(งานไฟฟ้า)/หบฟ./ชบฟ.(ชศ.)</div>
+								<div>เรื่อง แจ้งผลการรับแจ้งและผลการตรวจแก้โทรศัพท์หมายเลขที่ขัดข้อง<div>
+								<div style="margin-top: 1em; margin-left: 4em">การตรวจแก้ดี ประจำวันที่ ${self.getToday().getDate()}/${self.getToday().getMonth() + 1}/${self.getToday().getFullYear()+543} ดังนี้</div>
+								<p>
+								`
+								},
+				messageBottom:  function() {
+								return `
+								<div style="margin-top: 4em; text-align: center">
+									<div>จึงเรียนมาเพื่อโปรดทราบ</div>
+									<div style="margin-top: 3em">(.........................................)</div>
+									<div>หัวหน้าหมวดชุมสาย</div>
+									<div>.........../.........../...........</div>
+								</div>`
+								}
+			}],
+			columnDefs: [
+				{ targets: [0,1,2,3], width: '9rem', className: 'text-center' },
+				{ targets: [-1], width: '12rem', className: 'text-center' },
+			],
+			responsive: true,
+			language: {
+				search: "_INPUT_",
+				searchPlaceholder: "Search records",
+			},
+			ordering: true,
+			paging: true,
+			pageLength: 10,
+			pagingType: "full_numbers",
+			lengthMenu: [5, 10, 15, 20],
+		});
+
+		table.on('mouseover', 'tr', function(this: any) {
+			$(this).css('cursor', 'pointer');
+			$(this).css('font-weight', 'bold');
+		});
+
+		table.on('mouseout', 'tr', function(this: any) {
+			$(this).css('font-weight', 'normal');
+		});
+
+		table.on('click', 'tr', function(this: any) {
+			self.editIssue(table.row(this).index());
+		});
+
+		self.searchIssue();
+	}
+
+	editIssue(inx: number) {
+		this.issue = this.issues[inx];
+
+		this._lineswpServ.findById(this.token, this.issue.id).subscribe(rs => {
+			this.lineswapIssue = rs;
+			this.lineswapIssueFrm.patchValue(this.lineswapIssue);
+		});
 	}
 
 	searchPhone(search: string) {
@@ -160,7 +229,59 @@ export class LineswapNewIssueComponent {
 	}
 
 	searchIssue() {
-		this._router.navigate(['/lineswap-issue-search']);
+		let table = $('#new-issue-table').DataTable();
+		table.clear();
+		this.data = []
+
+		this._rptServ.findall(this.token).subscribe(rs => {
+		this.issues = rs;
+		this.data = [];
+
+
+		if(this.issues) {
+			this.issues.forEach((s,i) => {
+			let date = new Date(s.created);
+			let hh = '00' + date.getHours();
+			let mm = '00' + date.getMinutes();
+			let ss = '00' + date.getSeconds();
+
+			this.data.push([
+				s.created.toString().split('T')[0],
+				`${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
+				s.issueno,
+				s.phone.number,
+				this.getIssueType(s.issuetype),              
+				s.issuecontactno
+			]);
+			});
+		}
+
+		table.rows.add(this.data);
+		table.draw();
+		});
+	}
+
+	getIssueType(itype: number) {
+		let it: string = '';
+		switch(itype) {
+		case 1:
+			it = 'โอนสาย';
+			break;
+		case 2:
+			it = 'ติดต่อสอบถาม';
+			break;
+		case 3:
+			it = 'แจ้งเสีย';
+			break;
+		case 4:
+			it = 'อื่นๆ';
+			break;
+		default:
+			it = 'ไม่ระบุ';
+			break;
+		}
+
+		return it;
 	}
 
 	save() {
@@ -194,5 +315,10 @@ export class LineswapNewIssueComponent {
 		));
 
 		window.open(url, '_blank');
+	}
+
+	getToday() {
+		let today = new Date()
+		return today;
 	}
 }

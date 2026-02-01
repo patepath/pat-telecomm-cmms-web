@@ -51,7 +51,7 @@ export class SettingLineswapComponent {
     let self = this;
 
     let table = $('#operator-table').DataTable({
-      dom: 'Bfrtip',
+      dom: 'Bfrtlp',
       buttons: [
         {
             text: 'New Line Swap',
@@ -63,17 +63,20 @@ export class SettingLineswapComponent {
         },
         'copy', 'csv', 'excel', 'print'],
       columnDefs: [
-        { target: [0, 1], width: '10em', className: 'text-center' },
+        { target: [0, 1, 3, -1, -2], width: '10em', className: 'text-center' },
+        { target: [2], width: '15em' },
       ],
       responsive: true,
       language: {
         search: "_INPUT_",
         searchPlaceholder: "Search records",
       },
-      ordering: false,
+      ordering: true,
+      order: [0, 'asc'],
       paging: true,
       pageLength: 10,
       pagingType: "full_numbers",
+      lengthMenu: [5, 10, 15, 20],
     });
 
     table.on('mouseover', 'tr', function(this: any) {

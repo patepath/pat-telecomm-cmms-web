@@ -23,6 +23,13 @@ export class LineswapService {
     ]);
   }
 
+  findById(token: string, id: number): Observable<LineswapIssue> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
+    let options = { headers: headers };
+
+    return this._http.get<LineswapIssue>(`${URLAPI}/lineswap/findbyid/${token}/${id}`, options);
+  }
+
   save(token: string, lineswapissue: LineswapIssue): Observable<APIResult> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
     let options = { headers: headers };
