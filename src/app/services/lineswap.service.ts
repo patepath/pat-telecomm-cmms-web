@@ -28,6 +28,6 @@ export class LineswapService {
     let options = { headers: headers };
     let body = lineswapissue
 
-    return this._http.post<APIResult>(`${URLAPI}/lineswap/${token}`, body, options)
+    return this._http.post<APIResult>(`${URLAPI}/lineswap/save/${token}`, body, options);
   }
 }
