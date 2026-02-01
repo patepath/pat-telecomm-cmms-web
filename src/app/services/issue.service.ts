@@ -16,15 +16,12 @@ export class IssueService {
   getIssueTypes(): Observable<IssueType[]> {
     return of([ 
       { value: 0, name: '- เลือก -'},
-      //{ value: 1, name: 'แจ้งเหตุเสีย'},
-      //{ value: 2, name: 'ติดตั้งเลขหมายใหม่'},
-      //{ value: 3, name: 'ติดตั้งเครื่องพ่วง'},
-      //{ value: 4, name: 'ปรับปรุงสาย'},
-      //{ value: 5, name: 'ย้าย'},
-      //{ value: 6, name: 'เปลี่ยนเครื่อง'},
-      { value: 10, name: 'โอนสาย'},
-      { value: 11, name: 'ติดต่อสอบ'},
-      { value: 1, name: 'แจ้งเสีย'},
+      { value: 1, name: 'แจ้งเหตุเสีย'},
+      { value: 2, name: 'ติดตั้งเลขหมายใหม่'},
+      { value: 3, name: 'ติดตั้งเครื่องพ่วง'},
+      { value: 4, name: 'ปรับปรุงสาย'},
+      { value: 5, name: 'ย้าย'},
+      { value: 6, name: 'เปลี่ยนเครื่อง'},
       { value: 99, name: 'อื่นๆ'},
     ]);
   }

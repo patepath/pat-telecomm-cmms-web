@@ -54,7 +54,7 @@ export class SettingLineswapComponent {
       dom: 'Bfrtip',
       buttons: [
         {
-            text: 'New Phone',
+            text: 'New Line Swap',
             action: function ( e: any, dt: any, node: any, config: any ) {
               self.operator=<Operator>{};
               self.operator.id=0;
