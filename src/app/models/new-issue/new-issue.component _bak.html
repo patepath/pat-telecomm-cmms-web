@@ -1,0 +1,141 @@
+<div class="container-fluid overflow-auto" style="height: 100vh;">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">รับเรื่อง</span>
+        </div>
+    </nav>
+
+    <form [formGroup]="issueFrm">
+        <div class="d-flex flex-row mb-2">
+            @if(issueFrm.get('issueno')?.value) {
+            <div classs="form-group">
+                <label>เลขที่งาน</label>
+                <span class="form-control">{{issueFrm.get('issueno')?.value}}</span>
+            </div>
+            }
+
+            <div class="form-group ms-1">
+                <label>วันที่รับเรื่อง</label>
+                <span class="form-control">{{issueFrm.get('created')?.value | date: "dd-MM-yyyy hh:mm:ss"}}</span>
+            </div>
+
+            <div class="form-group ms-1">
+                <label>ประเภทงาน</label>
+                <select class="form-select" formControlName="issuetype">
+                    <option *ngFor="let opt of issueTypes" [value]="opt.value">{{opt.name}}</option>
+                </select>
+            </div>
+
+            @if(issuetype == 99) {
+                <div class="form-group ms-1">
+                    <label>ระบุ</label>
+                    <input class="form-control" formControlName="issuetypeother">
+                </div>
+            }
+        </div>
+
+        <div class="d-flex flex-row mb-2">
+            <div class="form-group me-1">
+                <label class="label label-default">สายโทรเข้า</label>
+                <input id="search" class="form-control" #search (keyup)="searchPhone(search.value)">
+            </div>
+
+            <div class="form-group me-1">
+                <label class="label label-default">สถานที่/แผนก</label>
+                <select class="form-select" formControlName="phone" (change)="changeLocation()">
+                    <option *ngFor="let opt of phones" [ngValue]="opt">{{opt.number + ' ' + opt.location}}</option>
+                </select>
+            </div>
+
+            <div class="form-group me-1">
+                <label class="label label-default">ชื่อผู้แจ้ง</label>
+                <input class="form-control" formControlName="phoneby">
+            </div>
+        </div>
+
+        <div class="d-flex flex-row mb-2">
+            <div class="form-group me-1">
+                <label class="label label-default">หมายเลขโทรศัพท์ติดต่อ</label>
+                <input class="form-control" formControlName="issuecontactno" #searchPhoneBy (keyup)="searchPhoneby(searchPhoneBy.value)">
+            </div>
+
+            <div class="form-group me-1">
+                <label class="label label-default">สถานที่/แผนก</label>
+                <select class="form-select" formControlName="issuelocation" id="issueLocation" (change)="changeIssueLocation()">
+                    <option *ngFor="let opt of operators" [value]="opt.organization + '/' + opt.unit">{{opt.organization + '/' + opt.unit}}</option>
+                </select>
+            </div>
+
+            <div class="form-group me-1">
+                <label class="label label-default">ชื่อผู้แจ้ง</label>
+                <input class="form-control" formControlName="issueby">
+            </div>
+        </div>
+
+        <div class="d-flex flex-row mb-2">
+            <div class="form-group w-100">
+                <label class="label label-default">ความต้องการ/สอบถาม</label>
+                <textarea class="form-control" rows="5" formControlName="issuedescription"></textarea>
+            </div>
+        </div>
+
+        <div class="d-flex flex-column me-1 mb-2">
+
+            @if(role == 1) {
+                <div class="form-group">
+                    <input type="file" multiple="true" accept="image/*" class="form-control" formControlName="file" (change)="onFileSelect($event)">
+                </div>
+            }
+
+            @if(files.length > 0) {
+                <div>
+                    <ul class="mt-3">
+                        @for (filename of filenames; track $index) {
+                            <li>{{filename}}</li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+
+        <div class="d-flex flex-wrap">
+            @for(preview of previews; track $index)  {
+                <img [src]="preview" class="d-flex flex-wrap me-3 mb-3" style="display: block; width: 400px; height: auto;"/>
+            }   
+        </div>
+
+        <div class="d-flex flex-row mt-3 me-1 mb-3">
+            <button class="btn btn-warning me-1" (click)="newIssue()">
+                <em class="fa fa-plus"></em>
+                ล้างแบบฟอร์ม
+            </button>
+
+            <button class="btn btn-success me-1" (click)="save()">
+                <em class="fa fa-save"></em>
+                บันทึก
+            </button>
+
+            <button class="btn btn-info me-1" (click)="print()" [disabled]="issue.phone == null || issue.issuetype == 0 || issue.issueby == null || issue.issueby == ''">
+                <em class="fa fa-print"></em>
+                พิมพ์ใบสั่งงาน
+            </button>
+        </div>
+    </form>
+
+
+    <div class="table-responsive">
+        <table id="new-issue-table" class="table table-bordered mt-1" style="width: 100%;">
+            <caption></caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable.headerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+</div>

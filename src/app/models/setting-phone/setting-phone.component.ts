@@ -28,8 +28,8 @@ export class SettingPhoneComponent implements AfterViewInit {
 
   constructor(private readonly _phoneServ: PhoneService) {
     this.dataTable = {
-      headerRow: ['หมายเลข', 'สถานที่', 'H', 'K', 'TC1', 'TC2', 'TC3', 'TC4', 'TC5' ],
-      footerRow: ['หมายเลข', 'สถานที่', 'H', 'K', 'TC1', 'TC2', 'TC3', 'TC4', 'TC5' ],
+      headerRow: ['หมายเลข', 'สถานที่', 'K', 'H', 'TC1', 'TC2', 'TC3', 'TC4', 'TC5' ],
+      footerRow: ['หมายเลข', 'สถานที่', 'K', 'H', 'TC1', 'TC2', 'TC3', 'TC4', 'TC5' ],
       dataRows: [],
     };
 
@@ -102,8 +102,8 @@ export class SettingPhoneComponent implements AfterViewInit {
     if(this.phones) {
       this.phones.forEach(s => {
         this.data.push([
-          s.number,
           s.location,
+          s.number,
           s.hc,
           s.kc,
           s.tc1,
