@@ -30,8 +30,8 @@ export class SettingLineswapComponent {
 
   constructor(private readonly _operatorServ: OperatorService) {
     this.dataTable = {
-      headerRow: ['หมายเลข', 'หมายเลขข้างเคียง', 'ชื่อบุคคล', 'ตำแหน่ง', 'แผนก', 'กอง', 'ฝ่าย' ],
-      footerRow: ['หมายเลข', 'หมายเลขข้างเคียง', 'ชื่อบุคคล', 'ตำแหน่ง', 'แผนก', 'กอง', 'ฝ่าย' ],
+      headerRow: ['หมายเลข', 'หมายเลขข้างเคียง', 'ชื่อบุคคล', 'ตำแหน่ง', 'หน่วยงาน/บริษัท', 'แผนก', 'กอง', 'ฝ่าย' ],
+      footerRow: ['หมายเลข', 'หมายเลขข้างเคียง', 'ชื่อบุคคล', 'ตำแหน่ง', 'หน่วยงาน/บริษัท', 'แผนก', 'กอง', 'ฝ่าย' ],
       dataRows: [],
     };
 
@@ -112,6 +112,7 @@ export class SettingLineswapComponent {
           s.staffname,
           s.position,
           s.organization,
+          s.unit,
           s.division,
           s.department,
         ])
