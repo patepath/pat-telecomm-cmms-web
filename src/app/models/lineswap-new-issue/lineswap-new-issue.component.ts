@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { FormsModule, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { APIfileAttach, FileAttachInfomation, IssueType, LineswapIssue, LoginInfo, Operator, Phone, User } from '../../interfaces';
+import { APIfileAttach, FileAttachInfomation, IssueInquiry, IssueType, LineswapIssue, LoginInfo, Operator, Phone, User } from '../../interfaces';
 import { CommonModule } from '@angular/common';
 import { debounceTime, filter, Subject, switchMap } from 'rxjs';
 import { PhoneService } from '../../services/phone.service';
@@ -30,6 +30,9 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 	public data!: string[][];
 	public issueTypes: IssueType[]=[];
 	public issuetype: number=0;
+
+	public issueInquiry: number=0;
+	public issueInquiries: IssueInquiry[]=[];
 
 	public phones: Phone[]=[];
 	public phone: Phone=<Phone>{};
@@ -75,8 +78,9 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 			phoneby: new FormControl('' ),
 			tech: new FormControl(<User>{}),
 			created: new FormControl(new Date()),
-			issuetype: new FormControl(1, Validators.min(1)),
+			issuetype: new FormControl(0, Validators.min(1)),
 			issuetypeother: new FormControl(''),
+			issueinquiry: new FormControl(0),
 			issueby: new FormControl('', Validators.required),
 			issuecontactno: new FormControl('', Validators.required),
 			issuedescription: new FormControl('', Validators.required),
@@ -93,6 +97,11 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 		this._lineswpServ.getIssueTypesLineSwap().subscribe(rs => {
 			this.issueTypes = rs;
 			this.lineswapIssue.issuetype = 0;
+		});
+
+		this._lineswpServ.getIssueInquiry().subscribe(rs => {
+			this.issueInquiries = rs;
+			this.lineswapIssue.issueinquiry = 0;
 		});
 
 		let storage = localStorage.getItem('info');
@@ -129,11 +138,11 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 				this.lineswapIssueFrm.get('phoneby')?.setValue(this.operators[0].phonenumber);
 			}
 		});
-
 	}
 
 	ngAfterViewInit(): void {
 		this.initTable();
+		this.searchIssue();
 	}
 
 	initTable() {
@@ -190,8 +199,6 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 		table.on('click', 'tr', function(this: any) {
 			self.editIssue(table.row(this).index());
 		});
-
-		self.searchIssue();
 	}
 
 	editIssue(inx: number) {

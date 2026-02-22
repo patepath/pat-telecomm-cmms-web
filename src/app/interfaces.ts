@@ -23,6 +23,10 @@ export interface IssueType {
   name: string
 }
 
+export interface IssueInquiry {
+  value: number
+  name: string
+}
 export interface Issue {
     id: number;
     issueno: string;
@@ -53,6 +57,7 @@ export interface LineswapIssue {
     created: Date;
     issuetype: number;
     issuetypeother: string;
+    issueinquiry: number;
     issueby: string;
     issuecontactno: string;
     issuelocation: string;

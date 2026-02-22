@@ -25,9 +25,19 @@ export class LineswapService {
 
   getIssueTypesLineSwap(): Observable<IssueType[]> {
     return of([ 
+      { value: 0, name: '- เลือก -'},
       { value: 1, name: 'ติดต่อสอบถาม'},
       { value: 2, name: 'โอนสาย'},
       { value: 3, name: 'แจ้งเสีย'},
+    ]);
+  }
+
+  getIssueInquiry(): Observable<IssueType[]> {
+    return of([ 
+      { value: 0, name: '- เลือก -'},
+      { value: 1, name: 'หน่วยงาน/ตัวย่อ'},
+      { value: 2, name: 'ชื่อ/ตำแหน่ง'},
+      { value: 3, name: 'หมายเลขโทรศัพท์'},
     ]);
   }
 
