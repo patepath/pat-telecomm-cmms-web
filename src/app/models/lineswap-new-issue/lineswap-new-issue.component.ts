@@ -75,7 +75,7 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 			phoneby: new FormControl('' ),
 			tech: new FormControl(<User>{}),
 			created: new FormControl(new Date()),
-			issuetype: new FormControl(0, Validators.min(1)),
+			issuetype: new FormControl(1, Validators.min(1)),
 			issuetypeother: new FormControl(''),
 			issueby: new FormControl('', Validators.required),
 			issuecontactno: new FormControl('', Validators.required),
@@ -90,7 +90,7 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 			isattach: new FormControl(false),
 		});
 
-		this._lineswpServ.getIssueTypes().subscribe(rs => {
+		this._lineswpServ.getIssueTypesLineSwap().subscribe(rs => {
 			this.issueTypes = rs;
 			this.lineswapIssue.issuetype = 0;
 		});
@@ -234,30 +234,30 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 		this.data = []
 
 		this._rptServ.findall(this.token).subscribe(rs => {
-		this.issues = rs;
-		this.data = [];
+			this.issues = rs;
+			this.data = [];
 
 
-		if(this.issues) {
-			this.issues.forEach((s,i) => {
-			let date = new Date(s.created);
-			let hh = '00' + date.getHours();
-			let mm = '00' + date.getMinutes();
-			let ss = '00' + date.getSeconds();
+			if(this.issues) {
+				this.issues.forEach((s,i) => {
+				let date = new Date(s.created);
+				let hh = '00' + date.getHours();
+				let mm = '00' + date.getMinutes();
+				let ss = '00' + date.getSeconds();
 
-			this.data.push([
-				s.created.toString().split('T')[0],
-				`${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
-				s.issueno,
-				s.phone.number,
-				this.getIssueType(s.issuetype),              
-				s.issuecontactno
-			]);
-			});
-		}
+				this.data.push([
+					s.created.toString().split('T')[0],
+					`${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
+					s.issueno,
+					s.phone.number,
+					this.getIssueType(s.issuetype),              
+					s.issuecontactno
+				]);
+				});
+			}
 
-		table.rows.add(this.data);
-		table.draw();
+			table.rows.add(this.data);
+			table.draw();
 		});
 	}
 
@@ -265,19 +265,13 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 		let it: string = '';
 		switch(itype) {
 		case 1:
-			it = 'โอนสาย';
+			it = 'ติดต่อสอบถาม';
 			break;
 		case 2:
-			it = 'ติดต่อสอบถาม';
+			it = 'โอนสาย';
 			break;
 		case 3:
 			it = 'แจ้งเสีย';
-			break;
-		case 4:
-			it = 'อื่นๆ';
-			break;
-		default:
-			it = 'ไม่ระบุ';
 			break;
 		}
 

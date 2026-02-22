@@ -20,6 +20,14 @@
             </div>
 
             <div class="form-group ms-1">
+                <label>สายโทรเข้า</label>
+                <select class="form-select">
+                    <option value="1">สายใน</option>
+                    <option value="2">สายนอก</option>
+                </select>
+            </div>
+
+            <div class="form-group ms-1">
                 <label>ประเภทงาน</label>
                 <select class="form-select" formControlName="issuetype">
                     <option *ngFor="let opt of issueTypes" [value]="opt.value">{{opt.name}}</option>
@@ -32,6 +40,18 @@
                     <input class="form-control" formControlName="issuetypeother">
                 </div>
             }
+
+            <div class="form-group ms-1" style="width: 10rem;">
+                <label class="label label-default">หมายเลขโทรศัพท์ติดต่อ</label>
+                <input class="form-control" formControlName="issuecontactno" #searchPhoneBy (keyup)="searchPhoneby(searchPhoneBy.value)">
+            </div>
+
+            <div class="form-group ms-1">
+                <label class="label label-default">สถานที่/แผนก</label>
+                <select class="form-select" formControlName="issuelocation" id="issueLocation" (change)="changeIssueLocation()">
+                    <option *ngFor="let opt of operators" [value]="opt.organization + '/' + opt.unit + '/' + opt.department">{{opt.organization + '/' + opt.unit + '/' + opt.phonenumber}}</option>
+                </select>
+            </div>
         </div>
 
         <div class="d-flex flex-row mb-2">
@@ -46,30 +66,10 @@
                     <option *ngFor="let opt of phones" [ngValue]="opt">{{opt.number + ' ' + opt.location}}</option>
                 </select>
             </div>
-
-            <div class="form-group me-1">
-                <label class="label label-default">ชื่อผู้แจ้ง</label>
-                <input class="form-control" formControlName="phoneby">
-            </div>
         </div>
 
         <div class="d-flex flex-row mb-2">
-            <div class="form-group me-1">
-                <label class="label label-default">หมายเลขโทรศัพท์ติดต่อ</label>
-                <input class="form-control" formControlName="issuecontactno" #searchPhoneBy (keyup)="searchPhoneby(searchPhoneBy.value)">
-            </div>
 
-            <div class="form-group me-1">
-                <label class="label label-default">สถานที่/แผนก</label>
-                <select class="form-select" formControlName="issuelocation" id="issueLocation" (change)="changeIssueLocation()">
-                    <option *ngFor="let opt of operators" [value]="opt.organization + '/' + opt.unit">{{opt.organization + '/' + opt.unit}}</option>
-                </select>
-            </div>
-
-            <div class="form-group me-1">
-                <label class="label label-default">ชื่อผู้แจ้ง</label>
-                <input class="form-control" formControlName="issueby">
-            </div>
         </div>
 
         <div class="d-flex flex-row mb-2">

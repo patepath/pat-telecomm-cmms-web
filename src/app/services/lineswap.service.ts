@@ -23,6 +23,14 @@ export class LineswapService {
     ]);
   }
 
+  getIssueTypesLineSwap(): Observable<IssueType[]> {
+    return of([ 
+      { value: 1, name: 'ติดต่อสอบถาม'},
+      { value: 2, name: 'โอนสาย'},
+      { value: 3, name: 'แจ้งเสีย'},
+    ]);
+  }
+
   findById(token: string, id: number): Observable<LineswapIssue> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
     let options = { headers: headers };
