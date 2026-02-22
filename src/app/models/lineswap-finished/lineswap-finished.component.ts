@@ -36,8 +36,8 @@ export class LineswapFinishedComponent implements AfterViewInit {
     private readonly _rptServ: LineswapFinishedService,
     private readonly _router: Router) {
     this.dataTable = {
-      headerRow: ['วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'สายโทรเข้า', 'ประเภทงาน', 'โทรศัพท์ติดต่อ' ],
-      footerRow: ['วันที่รับเรื่อง', 'เวลา', 'เลขที่รับเรื่อง', 'สายโทรเข้า', 'ประเภทงาน', 'โทรศัพท์ติดต่อ' ],
+			headerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'ประเภทงาน', 'รายละเอียดงาน', 'หมายเหตุ' ],
+			footerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'ประเภทงาน', 'รายละเอียดงาน', 'หมายเหตุ' ],
       dataRows: [],
     };
 
@@ -55,6 +55,7 @@ export class LineswapFinishedComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initTable();
+    this.searchbydate();
   }
 
   initTable() {
@@ -107,14 +108,6 @@ export class LineswapFinishedComponent implements AfterViewInit {
     table.on('mouseout', 'tr', function(this: any) {
       $(this).css('font-weight', 'normal');
     });
-
-    //table.on('click', 'td', function(this: any) {
-    //  let $tr = $(this).closest('tr');
-    //  self.issue = self.issues[table.row($tr).index()];
-    //  self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
-    //});
-
-    self.searchbydate();
   }
 
   changePeriod(period: string) {
@@ -149,7 +142,6 @@ export class LineswapFinishedComponent implements AfterViewInit {
       this.issues = rs;
       this.data = [];
 
-
       if(this.issues) {
         this.issues.forEach((s,i) => {
           let date = new Date(s.created);
@@ -162,8 +154,9 @@ export class LineswapFinishedComponent implements AfterViewInit {
             `${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
             s.issueno,
             s.phone.number,
-            this.getIssueType(s.issuetype),              
-            s.issuecontactno
+            s.issuecontactno,
+            s.issuedescription,
+            ''
           ]);
         });
       }

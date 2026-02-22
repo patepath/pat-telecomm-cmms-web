@@ -56,16 +56,9 @@ export interface LineswapIssue {
     phoneby: string;
     created: Date;
     issuetype: number;
-    issuetypeother: string;
     issueinquiry: number;
-    issueby: string;
     issuecontactno: string;
-    issuelocation: string;
     issuedescription: string;
-    issuecause: string;
-    issuesolution: string;
-    engineercode: string;
-    ext: string;
     finisheddate: Date;
     status: number;
 }

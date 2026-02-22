@@ -64,8 +64,8 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 	) { 
 
 		this.dataTable = {
-			headerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'สายโทรเข้า', 'ประเภทงาน', 'โทรศัพท์ติดต่อ' ],
-			footerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'สายโทรเข้า', 'ประเภทงาน', 'โทรศัพท์ติดต่อ' ],
+			headerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'ประเภทงาน', 'รายละเอียดงาน', 'หมายเหตุ' ],
+			footerRow: ['วันที่', 'เวลา', 'เลขที่รับเรื่อง', 'เลขหมาย', 'ประเภทงาน', 'รายละเอียดงาน', 'หมายเหตุ' ],
 			dataRows: [],
 		};
 
@@ -76,22 +76,14 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 			issueno: new FormControl(''),
 			phone: new FormControl(<Phone>{}, Validators.required),
 			phoneby: new FormControl('' ),
-			tech: new FormControl(<User>{}),
 			created: new FormControl(new Date()),
+			linetype: new FormControl(1, Validators.min(1)),
 			issuetype: new FormControl(0, Validators.min(1)),
-			issuetypeother: new FormControl(''),
 			issueinquiry: new FormControl(0),
-			issueby: new FormControl('', Validators.required),
 			issuecontactno: new FormControl('', Validators.required),
 			issuedescription: new FormControl('', Validators.required),
-			issuelocation: new FormControl(''),
-			issuecause: new FormControl(),
-			issuesolution: new FormControl(),
-			engineercode: new FormControl(),
 			finisheddate: new FormControl(),
 			status: new FormControl(0),
-			partusages: new FormControl(),
-			isattach: new FormControl(false),
 		});
 
 		this._lineswpServ.getIssueTypesLineSwap().subscribe(rs => {
@@ -207,6 +199,11 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 		this._lineswpServ.findById(this.token, this.issue.id).subscribe(rs => {
 			this.lineswapIssue = rs;
 			this.lineswapIssueFrm.patchValue(this.lineswapIssue);
+
+			let search: HTMLInputElement = <HTMLInputElement>document.getElementById('search');
+			search.value = this.lineswapIssue.phone.number;
+
+			this.searchPhone(this.lineswapIssue.phone.number);
 		});
 	}
 
@@ -258,7 +255,8 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 					s.issueno,
 					s.phone.number,
 					this.getIssueType(s.issuetype),              
-					s.issuecontactno
+					s.issuedescription,
+					''
 				]);
 				});
 			}
@@ -310,7 +308,6 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 					no: this.lineswapIssue.phone.number,
 					location: this.lineswapIssue.phone.location,
 					type: this.lineswapIssue.issuetype,
-					other: this.lineswapIssue.issuetypeother
 				} 
 			}
 		));

@@ -21,7 +21,7 @@
 
             <div class="form-group ms-1">
                 <label>สายโทรเข้า</label>
-                <select class="form-select">
+                <select class="form-select" formControlName="linetype">
                     <option [value]="1">สายใน</option>
                     <option [value]="2">สายนอก</option>
                 </select>
@@ -42,7 +42,6 @@
                     </select>
                 </div>
             }
-
         </div>
 
         <div class="d-flex flex-row mb-2">
@@ -65,7 +64,7 @@
 
         <div class="d-flex flex-row mb-2">
             <div class="form-group w-100">
-                <label class="label label-default">ความต้องการ/สอบถาม</label>
+                <label class="label label-default">รายละเอียดงาน</label>
                 <textarea class="form-control" rows="5" formControlName="issuedescription"></textarea>
             </div>
         </div>
@@ -81,7 +80,7 @@
                 บันทึก
             </button>
 
-            <button class="btn btn-info me-1" (click)="print()" [disabled]="lineswapIssue.phone == null || lineswapIssue.issuetype == 0 || lineswapIssue.issueby == null || lineswapIssue.issueby == ''">
+            <button class="btn btn-info me-1" (click)="print()" [disabled]="lineswapIssue.phone == null || lineswapIssue.issuetype == 0">
                 <em class="fa fa-print"></em>
                 พิมพ์ใบสั่งงาน
             </button>
