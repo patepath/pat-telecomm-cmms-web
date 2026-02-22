@@ -30,7 +30,8 @@ export class JobsClosedComponent implements AfterViewInit {
   public start: Date = new Date();
   public frmDate: string;
   public toDate: string
-  public info: LoginInfo=<LoginInfo>{}
+  public info: LoginInfo=<LoginInfo>{};
+  public filteredCount: number = 0;
 
   constructor(
     private readonly _rptServ: JobsCompletedService,
@@ -117,6 +118,10 @@ export class JobsClosedComponent implements AfterViewInit {
       self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
     });
 
+    table.on('search.dt', function() {
+      self.filteredCount = table.rows({ search: 'applied' }).count();
+    });
+
     self.searchbydate();
   }
 
@@ -156,7 +161,9 @@ export class JobsClosedComponent implements AfterViewInit {
     }
 
     table.rows.add(this.data);
-    table.draw();
+    table.rows().invalidate().draw(false);
+    let t = $('#jobs-completed-table').DataTable();
+    this.filteredCount = t.rows({ search: 'applied' }).count();
   }
 
   search() {

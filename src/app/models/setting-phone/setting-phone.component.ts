@@ -25,11 +25,12 @@ export class SettingPhoneComponent implements AfterViewInit {
   public phones: Phone[]=[];
   public phone: Phone=<Phone>{};
   public info: LoginInfo=<LoginInfo>{};
+  public filteredCount: number = 0;
 
   constructor(private readonly _phoneServ: PhoneService) {
     this.dataTable = {
-      headerRow: ['หมายเลข', 'สถานที่', 'K', 'H', 'TC1', 'TC2', 'TC3', 'TC4', 'TC5' ],
-      footerRow: ['หมายเลข', 'สถานที่', 'K', 'H', 'TC1', 'TC2', 'TC3', 'TC4', 'TC5' ],
+      headerRow: ['หมายเลข', 'สถานที่', 'ต้นทางชุมสาย', 'H', 'TC1', 'TC2', 'TC3', 'TC4', 'TC5' ],
+      footerRow: ['หมายเลข', 'สถานที่', 'ต้นทางชุมสาย', 'H', 'TC1', 'TC2', 'TC3', 'TC4', 'TC5' ],
       dataRows: [],
     };
 
@@ -92,6 +93,10 @@ export class SettingPhoneComponent implements AfterViewInit {
       let $tr = $(this).closest('tr');
       self.edit(table.row(this).index())
     });
+
+    table.on('search.dt', function() {
+      self.filteredCount = table.rows({ search: 'applied' }).count();
+    });
   }
 
   refreshTable() {
@@ -116,7 +121,8 @@ export class SettingPhoneComponent implements AfterViewInit {
     }
 
     table.rows.add(this.data);
-    table.draw()
+    table.rows().invalidate().draw(false);
+    this.filteredCount = table.rows({ search: 'applied' }).count();
   }
 
   edit(inx: number) {

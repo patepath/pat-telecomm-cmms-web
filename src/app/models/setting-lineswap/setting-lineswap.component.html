@@ -6,6 +6,10 @@
     </nav>
 
     <div class="contianer-fluid p-2">
+        <div class="alert alert-info mb-3" *ngIf="filteredCount > 0">
+            <strong>พบผลลัพธ์:</strong> {{ filteredCount }} รายการ
+        </div>
+
         <table id="operator-table" class="table table-hover">
             <caption></caption>
 

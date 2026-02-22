@@ -26,6 +26,7 @@ export class SettingLineswapComponent {
   public operator: Operator=<Operator>{};
 
   public info: LoginInfo=<LoginInfo>{};
+  public filteredCount: number = 0;
 
   constructor(private readonly _operatorServ: OperatorService) {
     this.dataTable = {
@@ -92,6 +93,10 @@ export class SettingLineswapComponent {
       let $tr = $(this).closest('tr');
       self.edit(table.row(this).index())
     });
+
+    table.on('search.dt', function() {
+      self.filteredCount = table.rows({ search: 'applied' }).count();
+    });
   }
 
   refreshTable() {
@@ -114,7 +119,8 @@ export class SettingLineswapComponent {
     }
 
     table.rows.add(this.data);
-    table.draw()
+    table.rows().invalidate().draw(false);
+    this.filteredCount = table.rows({ search: 'applied' }).count();
   }
 
   edit(inx: number) {

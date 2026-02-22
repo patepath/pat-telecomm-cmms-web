@@ -25,6 +25,7 @@ export class SettingPartComponent implements AfterViewInit {
   public partprofiles: PartProfile[]=[];
   public partprofile: PartProfile=<PartProfile>{};
   public token: string='';
+  public filteredCount: number = 0;
 
   constructor(private readonly _partServ: PartService) {
     this.dataTable = {
@@ -98,6 +99,10 @@ export class SettingPartComponent implements AfterViewInit {
       //self.router.navigate(['admin/close-issue', self.reports[table.row(this).index()].id]);
       self.edit(table.row(this).index());
     });
+
+    table.on('search.dt', function() {
+      self.filteredCount = table.rows({ search: 'applied' }).count();
+    });
   }
 
   refreshTable() {
@@ -114,7 +119,8 @@ export class SettingPartComponent implements AfterViewInit {
     });
 
     table.rows.add(this.data);
-    table.draw();
+    table.rows().invalidate().draw(false);
+    this.filteredCount = table.rows({ search: 'applied' }).count();
   }
 
   search() {

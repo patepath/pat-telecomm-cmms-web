@@ -20,6 +20,7 @@ export class JobsTodayComponent implements AfterViewInit {
   public issue: Issue=<Issue>{}
   public issues: Issue[]=[];
   public token: string='';
+  public filteredCount: number = 0;
   
   public frmDate: string;
 
@@ -108,6 +109,10 @@ export class JobsTodayComponent implements AfterViewInit {
       self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
     });
 
+    table.on('search.dt', function() {
+      self.filteredCount = table.rows({ search: 'applied' }).count();
+    });
+
     self.search();
   }
 
@@ -139,7 +144,9 @@ export class JobsTodayComponent implements AfterViewInit {
     }
 
     table.rows.add(this.data);
-    table.draw();
+    table.rows().invalidate().draw(false);
+    let t = $('#jobs-today-table').DataTable();
+    this.filteredCount = t.rows({ search: 'applied' }).count();
   }
 
   getStatus(status: number): string {

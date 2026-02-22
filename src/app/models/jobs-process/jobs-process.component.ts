@@ -33,6 +33,7 @@ export class JobsProcessComponent implements AfterViewInit {
   public frmDate: String;
   public toDate: String;
   public token: string='';
+  public filteredCount: number = 0;
   
   constructor(
     private readonly _rptServ: JobsProcessService,
@@ -126,6 +127,10 @@ export class JobsProcessComponent implements AfterViewInit {
       self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
     });
 
+    table.on('search.dt', function() {
+      self.filteredCount = table.rows({ search: 'applied' }).count();
+    });
+
     self.search();
   }
 
@@ -158,7 +163,9 @@ export class JobsProcessComponent implements AfterViewInit {
     }
 
     table.rows.add(this.data);
-    table.draw();
+    table.rows().invalidate().draw(false);
+    let t = $('#proceeding-issue-table').DataTable();
+    this.filteredCount = t.rows({ search: 'applied' }).count();
   }
 
   getToday() {

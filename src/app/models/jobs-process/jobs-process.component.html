@@ -6,6 +6,10 @@
     </nav>
 
     <div class="table-responsive">
+        <div class="alert alert-info mb-3" *ngIf="filteredCount > 0">
+            <strong>พบผลลัพธ์:</strong> {{ filteredCount }} รายการ
+        </div>
+        
         <table id="proceeding-issue-table" class="table table-hover mt-1" style="width: 100%">
             <caption></caption>
 

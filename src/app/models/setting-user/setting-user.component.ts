@@ -29,6 +29,7 @@ export class SettingUserComponent implements AfterViewInit {
   public password2: string='';
   public isChangePassword: boolean=false;
   public token: string='';
+  public filteredCount: number = 0;
 
   constructor(private readonly _userServ: UserService) {
     this.dataTable = {
@@ -48,6 +49,7 @@ export class SettingUserComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.initTable();
+    this.search();
   }
 
   initTable() {
@@ -105,7 +107,9 @@ export class SettingUserComponent implements AfterViewInit {
       $('#user-modal').modal('show');
     });
 
-    self.search();
+    table.on('search.dt', function() {
+      self.filteredCount = table.rows({ search: 'applied' }).count();
+    });
   }
 
   search() {
@@ -136,6 +140,7 @@ export class SettingUserComponent implements AfterViewInit {
 
     table.rows.add(this.data);
     table.draw();
+    this.filteredCount = table.rows({ search: 'applied' }).count();
   }
 
   getRoleName(role: number): string {

@@ -23,6 +23,7 @@ export class ReportByStatusComponent implements AfterViewInit {
 
   public frmDate: string;
   public toDate: string;
+  public filteredCount: number = 0;
 
   constructor(private _issueSrv: IssueService) {
       let storage = localStorage.getItem('info');
@@ -56,11 +57,11 @@ export class ReportByStatusComponent implements AfterViewInit {
     let self = this;
 
     let table = $('#report-by-status-table').DataTable({
-      dom: 'Bfrtip',
+      dom: 'Bfrtlp',
       buttons: ['copy', 'csv', 'excel', 'print'],
       columnDefs: [
-        { targets: [0,1], width: '6rem', className: 'text-center' },
-        { targets: [0,1,2,3,4], width: '8rem', className: 'text-center' },
+        { targets: [0], width: '6rem', className: 'text-center' },
+        { targets: [1,2,3,4], width: '8rem', className: 'text-center' },
         { targets: [-1], width: '10rem', className: 'text-center' },
       ],
       responsive: true,
@@ -69,9 +70,15 @@ export class ReportByStatusComponent implements AfterViewInit {
         searchPlaceholder: "Search records",
       },
       ordering:  false,
-      paging: false,
-      pageLength: 15,
+      paging: true,
+      pageLength: 10,
       pagingType: "full_numbers",
+      lengthChange: true,
+      lengthMenu: [5, 10, 15, 20],
+    });
+
+    table.on('search.dt', function() {
+      self.filteredCount = table.rows({ search: 'applied' }).count();
     });
 
 //    table.on('mouseover', 'tr', function(this: any) {
@@ -105,13 +112,14 @@ export class ReportByStatusComponent implements AfterViewInit {
         s.phone.hc,
         s.phone.location,
         s.issuedescription,
-        //String(s.status)
         this.getStatus(s.status)
       ]);
     });
 
     table.rows.add(this.data);
-    table.draw();
+    table.rows().invalidate().draw(false);
+    let t = $('#report-by-status-table').DataTable();
+    this.filteredCount = t.rows({ search: 'applied' }).count();
   }
 
   getStatus(status: number): string {

@@ -13,6 +13,10 @@
     </div>
     
     <div class="table-responsive mt-3">
+        <div class="alert alert-info mb-3" *ngIf="filteredCount > 0">
+            <strong>พบผลลัพธ์:</strong> {{ filteredCount }} รายการ
+        </div>
+        
         <table id="jobs-today-table" class="table table-hover mt-1">
             <caption></caption>
 

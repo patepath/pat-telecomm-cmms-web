@@ -54,9 +54,7 @@ export class ReportBySummaryComponent {
   }
 
   initTable() {
-    let self = this;
-
-    let table = $('#report-by-summary-table').DataTable({
+    $('#report-by-summary-table').DataTable({
       dom: 'Bfrtip',
       buttons: ['copy', 'csv', 'excel', 'print'],
       columnDefs: [
@@ -73,21 +71,6 @@ export class ReportBySummaryComponent {
       pageLength: 15,
       pagingType: "full_numbers",
     });
-
-//    table.on('mouseover', 'tr', function(this: any) {
-//      $(this).css('cursor', 'pointer');
-//      $(this).css('font-weight', 'bold');
-//    });
-//
-//    table.on('mouseout', 'tr', function(this: any) {
-//      $(this).css('font-weight', 'normal');
-//    });
-//
-//    table.on('click', 'td', function(this: any) {
-//      let $tr = $(this).closest('tr');
-//      //self.issue = self.issues[table.row($tr).index()];
-//      //self._router.navigate(['admin/edit-issue', self.issues[table.row(this).index()].id]);
-//    });
   }
 
   refreshTable() {
@@ -106,11 +89,15 @@ export class ReportBySummaryComponent {
     });
 
     table.rows.add(this.data);
-    table.draw();
+    table.rows().invalidate().draw(false);
   }
 
   getIssueType(issue_type: string): string {
     var v: string='';
+
+    if(!issue_type || issue_type.trim() === '' || issue_type === '11') {
+      issue_type = '0';
+    }
 
     switch(issue_type) {
       case '0': v = 'ไม่ระบุ'; break;
@@ -120,7 +107,8 @@ export class ReportBySummaryComponent {
       case '4': v = 'ปรับปรุงสาย'; break;
       case '5': v = 'ย้าย'; break;
       case '6': v = 'เปลี่ยนเครื่อง'; break;
-      case '99': v = 'อื่นๆ';
+      case '99': v = 'อื่นๆ'; break;
+      default: v = issue_type;
     } 
 
     return v;
