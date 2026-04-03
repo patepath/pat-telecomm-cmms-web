@@ -48,6 +48,13 @@ export class LineswapService {
     return this._http.get<LineswapIssue>(`${URLAPI}/lineswap/findbyid/${token}/${id}`, options);
   }
 
+  findByDate(token: string, id: number, frm: string, to: string): Observable<LineswapIssue> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
+    let options = { headers: headers };
+
+    return this._http.get<LineswapIssue>(`${URLAPI}/lineswap/findbydate/${token}/${id}/${frm}/${to}`, options);
+  }
+
   save(token: string, lineswapissue: LineswapIssue): Observable<APIResult> {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
     let options = { headers: headers };

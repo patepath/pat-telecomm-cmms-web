@@ -55,10 +55,12 @@ export interface LineswapIssue {
     phone: Phone;
     phoneby: string;
     created: Date;
+    linetype: number;
     issuetype: number;
     issueinquiry: number;
     issuecontactno: string;
     issuedescription: string;
+    issueremark: string;
     finisheddate: Date;
     status: number;
 }

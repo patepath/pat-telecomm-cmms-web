@@ -209,6 +209,22 @@
                   </a>
               </li>
 
+              <hr>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/tech/jobs-today']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-today'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#star"/></svg>
+                      งานใหม่วันนี้
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/tech/jobs-process']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-process'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#clock"/></svg>
+                      งานระหว่างดำเนินการ
+                  </a>
+              </li>
+
               <li class="nav-item">
                   <a [routerLink]="['/tech/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
@@ -226,7 +242,7 @@
               </li>
 
               <li class="nav-item">
-                  <a [routerLink]="['/operator/setting-lineswap']" class="nav-link text-white" [ngClass]="{'active': loc === 'setting-lineswap'}" aria-current="page">
+                  <a [routerLink]="['/tech/setting-lineswap']" class="nav-link text-white" [ngClass]="{'active': loc === 'setting-lineswap'}" aria-current="page">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#db"/></svg>
                       ข้อมูลสลับสาย
                   </a>
@@ -243,10 +259,103 @@
                   </a>
               </li>
 
+              <hr>
+
               <li class="nav-item">
                   <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
                       <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
-                      งานที่เสร็จแล้ว
+                      งานที่ประจำวัน
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      งานระหว่างดำเนินการ
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      รายงานประจำวัน
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      รายงานตามช่วงเวลา
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      รายงานทั้งหมด
+                  </a>
+              </li>
+
+              <hr>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/setting-phone']" class="nav-link text-white" [ngClass]="{'active': loc === 'setting-phone'}" aria-current="page">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#db"/></svg>
+                      ข้อมูลเลขหมาย
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/setting-lineswap']" class="nav-link text-white" [ngClass]="{'active': loc === 'setting-lineswap'}" aria-current="page">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#db"/></svg>
+                      ข้อมูลสลับสาย
+                  </a>
+              </li>
+            </ul>
+          }
+          @case (5) {
+          <ul class="nav nav-pills flex-column mb-auto">
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/new-lineswapissue']" class="nav-link text-white" [ngClass]="{'active': loc === 'new-lineswapissue'}" aria-current="page">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#recv-phone"/></svg>
+                      รับเรื่องสลับสาย 
+                  </a>
+              </li>
+
+              <hr>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      งานที่ประจำวัน
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      งานระหว่างดำเนินการ
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      รายงานประจำวัน
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      รายงานตามช่วงเวลา
+                  </a>
+              </li>
+
+              <li class="nav-item">
+                  <a [routerLink]="['/operator/jobs-closed-tech']" class="nav-link text-white" [ngClass]="{'active': loc === 'jobs-closed'}">
+                      <svg class="bi me-2" width="16" height="16"><use xlink:href="#smile"/></svg>
+                      รายงานทั้งหมด
                   </a>
               </li>
 

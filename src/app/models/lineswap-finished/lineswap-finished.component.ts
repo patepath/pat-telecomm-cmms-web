@@ -111,83 +111,108 @@ export class LineswapFinishedComponent implements AfterViewInit {
   }
 
   changePeriod(period: string) {
-    let now = new Date();
-    this.today = now;
-    this.start = new Date();
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = today.getMonth();
+    var date = today.getDate();
 
-    if (period === '7') {
-      this.start.setDate(now.getDate() - 7);
-    } else if (period === '15') {
-      this.start.setDate(now.getDate() - 15);
-    } else if (period === '1m') {
-      this.start.setMonth(now.getMonth() - 1);
-    } else if (period === '3m') {
-      this.start.setMonth(now.getMonth() - 3);
-    } else if (period === '6m') {
-      this.start.setMonth(now.getMonth() - 6);
-    } else if (period === '1y') {
-      this.start.setFullYear(now.getFullYear() - 1);
+    switch(period) {
+      case "1":
+        if(month < 9) {
+          today.setFullYear(year-2);
+        } else {
+          today.setFullYear(year-1);
+        }
+
+        today.setMonth(9);
+        today.setDate(1);
+        break;
+
+      case "2":
+        if(month < 9) {
+          today.setFullYear(year-1);
+        }
+
+        today.setMonth(9);
+        today.setDate(1);
+        break;
+      
+      case "3":
+        today.setMonth(month-3);
+        today.setDate(1);
+        break;
+
+      case "4":
+        today.setMonth(month-1);
+        today.setDate(1);
+        break;
+
+      case "5":
+        today.setDate(date-7);
+        break;
     }
 
-    this.frmDate = this.start.toISOString().split('T')[0];
-    this.toDate = this.today.toISOString().split('T')[0];
+    this.frmDate = today.toISOString().split('T')[0];
+    this.searchbydate();
   }
 
   searchbydate() {
+    let frm = this.frmDate;
+    let to = this.toDate;
+
+    this._rptServ.findByDate(this.info.token, frm,  to).subscribe(rs => {
+      this.issues = rs;
+      this.refreshTable();
+    });  
+  }
+
+  refreshTable() {
     let table = $('#lineswap-finished-table').DataTable();
     table.clear();
     this.data = []
 
-    this._rptServ.findall(this.info.token).subscribe(rs => {
-      this.issues = rs;
-      this.data = [];
+    this.data = [];
 
-      if(this.issues) {
-        this.issues.forEach((s,i) => {
-          let date = new Date(s.created);
-          let hh = '00' + date.getHours();
-          let mm = '00' + date.getMinutes();
-          let ss = '00' + date.getSeconds();
+    if(this.issues) {
+      this.issues.forEach((s,i) => {
+        let date = new Date(s.created);
+        let hh = '00' + date.getHours();
+        let mm = '00' + date.getMinutes();
+        let ss = '00' + date.getSeconds();
 
-          this.data.push([
-            s.created.toString().split('T')[0],
-            `${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
-            s.issueno,
-            s.phone.number,
-            s.issuecontactno,
-            s.issuedescription,
-            ''
-          ]);
-        });
-      }
-
-      table.rows.add(this.data);
-      table.draw();
-    });
-  }
-
-  getIssueType(itype: number) {
-    let it: string = '';
-    switch(itype) {
-      case 1:
-        it = 'โอนสาย';
-        break;
-      case 2:
-        it = 'ติดต่อสอบถาม';
-        break;
-      case 3:
-        it = 'แจ้งเสีย';
-        break;
-      case 4:
-        it = 'อื่นๆ';
-        break;
-      default:
-        it = 'ไม่ระบุ';
-        break;
+        this.data.push([
+          s.created.toString().split('T')[0],
+          `${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
+          s.issueno,
+          s.phone.number,
+          this.getIssueType(s.issuetype),              
+          s.issuedescription,
+          s.issueremark
+        ]);
+      });
     }
 
-    return it;
+    table.rows.add(this.data);
+    table.draw();
   }
+
+	getIssueType(itype: number) {
+		let it: string = '';
+
+		switch(itype) {
+		case 1:
+			it = 'ติดต่อสอบถาม';
+			break;
+		case 2:
+			it = 'โอนสาย';
+			break;
+		case 3:
+			it = 'แจ้งเสีย';
+			break;
+		}
+
+		return it;
+	}
 
   getToday() {
     let today = new Date()

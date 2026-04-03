@@ -19,7 +19,7 @@ import { LoginInfo } from '../../interfaces';
 export class DefaultLayoutComponent implements AfterViewInit{
 
   public loc?: String;
-  public info: LoginInfo=<LoginInfo>{}
+  public info: LoginInfo=<LoginInfo>{};
 
   constructor(private readonly _router: Router) {
     this.loc = document.location.pathname.split('/').pop();

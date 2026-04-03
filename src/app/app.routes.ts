@@ -47,8 +47,10 @@ export const routes: Routes = [
         children: [
             { path: 'new-issue', component: NewIssueComponent },
             { path: 'jobs-today', component: JobsTodayComponent },
+            { path: 'jobs-process', component: JobsProcessComponent },
             { path: 'jobs-closed-tech', component: JobsClosedTechComponent },
             { path: 'setting-phone', component: SettingPhoneComponent },
+            { path: 'setting-lineswap', component: SettingLineswapComponent },
         ]
     },
     {

@@ -82,6 +82,7 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 			issueinquiry: new FormControl(0),
 			issuecontactno: new FormControl('', Validators.required),
 			issuedescription: new FormControl('', Validators.required),
+			issueremark: new FormControl(''),
 			finisheddate: new FormControl(),
 			status: new FormControl(0),
 		});
@@ -228,8 +229,11 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 	}
 
 	newLineSwapIssue() {
+		var search: HTMLInputElement = <HTMLInputElement>document.getElementById('search');
+		search.value = '';
 		this.lineswapIssue = <LineswapIssue>{};
 		this.lineswapIssue.id = 0;  
+		this.lineswapIssueFrm.reset();
 	}
 
 	searchIssue() {
@@ -244,20 +248,20 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 
 			if(this.issues) {
 				this.issues.forEach((s,i) => {
-				let date = new Date(s.created);
-				let hh = '00' + date.getHours();
-				let mm = '00' + date.getMinutes();
-				let ss = '00' + date.getSeconds();
+					let date = new Date(s.created);
+					let hh = '00' + date.getHours();
+					let mm = '00' + date.getMinutes();
+					let ss = '00' + date.getSeconds();
 
-				this.data.push([
-					s.created.toString().split('T')[0],
-					`${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
-					s.issueno,
-					s.phone.number,
-					this.getIssueType(s.issuetype),              
-					s.issuedescription,
-					''
-				]);
+					this.data.push([
+						s.created.toString().split('T')[0],
+						`${hh.substring(hh.length-2)}:${mm.substring(mm.length-2)}:${ss.substring(ss.length-2)}`,
+						s.issueno,
+						s.phone.number,
+						this.getIssueType(s.issuetype),              
+						s.issuedescription,
+						s.issueremark	
+					]);
 				});
 			}
 
@@ -268,6 +272,7 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 
 	getIssueType(itype: number) {
 		let it: string = '';
+
 		switch(itype) {
 		case 1:
 			it = 'ติดต่อสอบถาม';
@@ -289,7 +294,9 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 		}
 
 		this.lineswapIssue = <LineswapIssue> this.lineswapIssueFrm.value;
+		this.lineswapIssue.linetype = Number(this.lineswapIssueFrm.get('linetype')?.value);
 		this.lineswapIssue.issuetype = Number(this.lineswapIssueFrm.get('issuetype')?.value);
+		this.lineswapIssue.issueinquiry = Number(this.lineswapIssueFrm.get('issueinquiry')?.value);
 		this.lineswapIssue.status = Number(this.lineswapIssueFrm.get('status')?.value);
 
 		this._lineswpServ.save(this.token, this.lineswapIssue).subscribe(rs => {

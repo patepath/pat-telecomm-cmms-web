@@ -31,6 +31,8 @@ export class SettingUserComponent implements AfterViewInit {
   public token: string='';
   public filteredCount: number = 0;
 
+  public info: LoginInfo=<LoginInfo>{};
+
   constructor(private readonly _userServ: UserService) {
     this.dataTable = {
       headerRow: ['User Name', 'Full Name', 'Position', 'Role', 'Status' ],
@@ -42,8 +44,8 @@ export class SettingUserComponent implements AfterViewInit {
 
     var storage = localStorage.getItem('info')
     if(storage) {
-      var info: LoginInfo = JSON.parse(storage);
-      this.token = info.token;
+      this.info = JSON.parse(storage);
+      this.token = this.info.token;
     }
   }
 
@@ -156,6 +158,9 @@ export class SettingUserComponent implements AfterViewInit {
 
       case 4:
         return "เจ้าหน้าที่สลับสาย";
+
+      case 5:
+        return "ช่างสลับสาย";
     }
 
     return "";
