@@ -38,42 +38,42 @@
         <div class="d-flex flex-column">
             <div class="form-group">
                 <label>หมายเลข</label>
-                <input type="text" class="form-control" [(ngModel)]="operator.phonenumber" [disabled]="info.role === 2">
+                <input type="text" class="form-control" [(ngModel)]="operator.phonenumber" [disabled]="info.role !== 1 && info.role !== 4">
             </div>
 
             <div class="form-group mt-2">
                 <label>หมายเลขข้างเคียง</label>
-                <textarea class="form-control" [(ngModel)]="operator.nearbynumber" [disabled]="info.role === 2"></textarea>
+                <textarea class="form-control" [(ngModel)]="operator.nearbynumber" [disabled]="info.role !== 1 && info.role !== 4"></textarea>
             </div>
             
             <div class="form-group mt-2">
                 <label>ชื่อบุคคล</label>
-                <input type="text" class="form-control" [(ngModel)]="operator.staffname" [disabled]="info.role === 2">
+                <input type="text" class="form-control" [(ngModel)]="operator.staffname" [disabled]="info.role !== 1 && info.role !== 4">
             </div>
 
             <div class="form-group mt-2">
                 <label>ตำแหน่ง</label>
-                <input type="text" class="form-control" [(ngModel)]="operator.position" [disabled]="info.role === 2">
+                <input type="text" class="form-control" [(ngModel)]="operator.position" [disabled]="info.role !== 1 && info.role !== 4">
             </div>
 
             <div class="form-group mt-2">
                 <label>หน่วยงาน/บริษัท</label>
-                <input type="text" class="form-control" [(ngModel)]="operator.organization">
+                <input type="text" class="form-control" [(ngModel)]="operator.organization" [disabled]="info.role !== 1 && info.role !== 4">
             </div>
 
             <div class="form-group mt-2">
                 <label>แผนก</label>
-                <input type="text" class="form-control" [(ngModel)]="operator.unit">
+                <input type="text" class="form-control" [(ngModel)]="operator.unit" [disabled]="info.role !== 1 && info.role !== 4">
             </div>
 
             <div class="form-group mt-2">
                 <label>กอง</label>
-                <input type="text" class="form-control" [(ngModel)]="operator.division">
+                <input type="text" class="form-control" [(ngModel)]="operator.division" [disabled]="info.role !== 1 && info.role !== 4">
             </div>
 
             <div class="form-group mt-2">
                 <label>ฝ่าย</label>
-                <input type="text" class="form-control" [(ngModel)]="operator.department">
+                <input type="text" class="form-control" [(ngModel)]="operator.department" [disabled]="info.role !== 1 && info.role !== 4">
             </div>
         </div>
       </div>

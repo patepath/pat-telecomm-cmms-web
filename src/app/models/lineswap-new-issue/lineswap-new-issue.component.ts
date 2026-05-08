@@ -265,8 +265,6 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 				});
 			}
 
-			console.log(this.data);
-
 			table.rows.add(this.data);
 			table.draw();
 		});
