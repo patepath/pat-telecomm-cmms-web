@@ -84,7 +84,7 @@
       </div>
 
       <div class="modal-footer">
-        @if(info.role === 1 || info.role === 4 || info.role === 5) {
+        @if(info.role === 1 || info.role == 2 ||  info.role === 4 || info.role === 5) {
           <button type="button" class="btn btn-primary" (click)="save()">บันทึก</button>
         }
 
