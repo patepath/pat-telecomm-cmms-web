@@ -241,7 +241,7 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 		table.clear();
 		this.data = []
 
-		this._rptServ.findall(this.token).subscribe(rs => {
+		this._rptServ.findtoday().subscribe(rs => {
 			this.issues = rs;
 			this.data = [];
 

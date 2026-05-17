@@ -17,10 +17,15 @@ export class LineswapFinishedService {
     return this._http.get<LineswapIssue[]>(`${URLAPI}/lineswap/findfinished/${token}`);
   }
 
-  findByDate(token: string, frm: string, to: string): Observable<LineswapIssue[]> {
-    let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
-    let options = { headers: headers };
+  findtoday(): Observable<LineswapIssue[]> {
+    return this._http.get<LineswapIssue[]>(`${URLAPI}/lineswap/findtoday`);
+  }
 
-    return this._http.get<LineswapIssue[]>(`${URLAPI}/lineswap/findbydate/${frm}/${to}`, options);
+  findByDate(token: string, frm: string, to: string): Observable<LineswapIssue[]> {
+    //let headers = new HttpHeaders({ 'Content-Type': 'application/json'});
+    //let options = { headers: headers };
+
+    //return this._http.get<LineswapIssue[]>(`${URLAPI}/lineswap/findbydate/${frm}/${to}`, options);
+    return this._http.get<LineswapIssue[]>(`${URLAPI}/lineswap/findbydate/${frm}/${to}`);
   }
 }
