@@ -18,6 +18,7 @@ import { ReportBySummaryComponent } from './models/report-by-summary/report-by-s
 import { ProfileComponent } from './models/profile/profile.component';
 import { LineswapNewIssueComponent } from './models/lineswap-new-issue/lineswap-new-issue.component';
 import { LineswapFinishedComponent } from './models/lineswap-finished/lineswap-finished.component';
+import { JobsDailyComponent } from './models/jobs-daily/jobs-daily.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent},
@@ -59,6 +60,7 @@ export const routes: Routes = [
         children: [
             { path: 'new-lineswapissue', component: LineswapNewIssueComponent },
             { path: 'jobs-today', component: JobsTodayComponent },
+            { path: 'jobs-daily', component: JobsDailyComponent },
             { path: 'jobs-closed-tech', component: LineswapFinishedComponent },
             { path: 'setting-phone', component: SettingPhoneComponent },
             { path: 'setting-lineswap', component: SettingLineswapComponent },

@@ -16,4 +16,8 @@ export class JobsTodayService {
   findall(token: string, frmDate: string): Observable<Issue[]> {
     return this._http.get<Issue[]>(`${URLAPI}/issue/findtoday/${token}/${frmDate}`);
   }
+
+  finddaily(token: string, date: string): Observable<Issue[]> {
+    return this._http.get<Issue[]>(`${URLAPI}/lineswap/finddaily/${token}/${date}`);
+  }
 }
