@@ -54,8 +54,8 @@ export class PrnNewissueComponent implements OnInit {
 
     switch(type) {
       case '1':
-        this.x = '5.8';
-        this.y = '3.3';
+        this.x = '3.9';
+        this.y = '1.4';
         break;
 
       case '2':
