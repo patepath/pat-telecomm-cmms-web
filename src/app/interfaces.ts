@@ -27,6 +27,7 @@ export interface IssueInquiry {
   value: number
   name: string
 }
+
 export interface Issue {
     id: number;
     issueno: string;
@@ -64,6 +65,13 @@ export interface LineswapIssue {
     finisheddate: Date;
     status: number;
 }
+
+export interface LineswapReport {
+  type: number
+  subtype: number
+  total: number
+}
+
 export interface APIfileAttach {
   success: boolean;
   issue: string;

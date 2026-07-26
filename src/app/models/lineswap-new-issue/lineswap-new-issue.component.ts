@@ -234,6 +234,13 @@ export class LineswapNewIssueComponent implements AfterViewInit {
 		this.lineswapIssue = <LineswapIssue>{};
 		this.lineswapIssue.id = 0;  
 		this.lineswapIssueFrm.reset();
+		this.lineswapIssueFrm.get('created')?.setValue(new Date());;
+		this.lineswapIssueFrm.get('linetype')?.setValue(1);
+		this.lineswapIssueFrm.get('issuetype')?.setValue(0);
+		this.lineswapIssueFrm.get('issueinquiry')?.setValue(0);
+		this.lineswapIssueFrm.get('status')?.setValue(0);
+		this.phones = [];
+		this.operators = [];
 	}
 
 	searchIssue() {

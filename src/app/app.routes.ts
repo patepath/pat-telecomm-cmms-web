@@ -18,7 +18,9 @@ import { ReportBySummaryComponent } from './models/report-by-summary/report-by-s
 import { ProfileComponent } from './models/profile/profile.component';
 import { LineswapNewIssueComponent } from './models/lineswap-new-issue/lineswap-new-issue.component';
 import { LineswapFinishedComponent } from './models/lineswap-finished/lineswap-finished.component';
-import { JobsDailyComponent } from './models/jobs-daily/jobs-daily.component';
+import { LineswapDailyComponent } from './models/lineswap-daily/lineswap-daily.component';
+import { LineswapEditComponent } from './models/lineswap-edit/lineswap-edit.component';
+import { LineswapReportDailyComponent } from './models/lineswap-report-daily/lineswap-report-daily.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent},
@@ -59,8 +61,9 @@ export const routes: Routes = [
         component: DefaultLayoutComponent,
         children: [
             { path: 'new-lineswapissue', component: LineswapNewIssueComponent },
-            { path: 'jobs-today', component: JobsTodayComponent },
-            { path: 'jobs-daily', component: JobsDailyComponent },
+            { path: 'edit-lineswapissue/:id', component: LineswapEditComponent },
+            { path: 'report-daily', component: LineswapReportDailyComponent },
+            { path: 'jobs-daily', component: LineswapDailyComponent },
             { path: 'jobs-closed-tech', component: LineswapFinishedComponent },
             { path: 'setting-phone', component: SettingPhoneComponent },
             { path: 'setting-lineswap', component: SettingLineswapComponent },

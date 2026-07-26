@@ -1,0 +1,72 @@
+<div class="container-fluid overflow-auto" style="height: 100vh;">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">งานสลับสาย</span>
+        </div>
+    </nav>
+
+    <form [formGroup]="lineswapIssueFrm" >
+        <div class="d-flex flex-row mb-2">
+            @if(lineswapIssueFrm.get('issueno')?.value) {
+            <div classs="form-group me-1">
+                <label>เลขที่งาน</label>
+                <span class="form-control">{{lineswapIssueFrm.get('issueno')?.value}}</span>
+            </div>
+            }
+
+            <div class="form-group ms-1 me-1">
+                <label>วันที่รับเรื่อง</label>
+                <span class="form-control">{{lineswapIssueFrm.get('created')?.value | date: "dd-MM-yyyy hh:mm:ss"}}</span>
+            </div>
+
+            <div class="form-group me-1">
+                <label>สายโทรเข้า</label>
+                <input id="create" class="form-control" formControlName="linetype">
+            </div>
+
+            <div class="form-group me-1">
+                <label>ประเภทงาน</label>
+                <input id="create" class="form-control" formControlName="issuetype">
+            </div>
+
+            @if(lineswapIssueFrm.get('issueinquiry')?.value !== '- เลือก -') {
+            <div class="form-group me-1">
+                <label>ติดต่อสอบถาม</label>
+                <input id="create" class="form-control" formControlName="issueinquiry">
+            </div>
+            }
+        </div>
+
+        <div class="d-flex flex-row mb-2">
+            <div class="form-group me-1 w-15">
+                <label class="label label-default">หมายเลขสายโทรเข้า</label>
+                <input id="search" class="form-control" formControlName="phone">
+            </div>
+
+            <div class="form-group me-1 w-100">
+                <label class="label label-default">สถานที่/แผนก</label>
+                <input id="search" class="form-control" formControlName="location">
+            </div>
+        </div>
+
+        <div class="d-flex flex-row mb-2">
+            <div class="form-group w-50 me-1">
+                <label class="label label-default">รายละเอียดงาน</label>
+                <input type="text" class="form-control" formControlName="issuedescription"/>
+            </div>
+
+            <div class="form-group w-50">
+                <label class="label label-default">หมายเหตุ</label>
+                <input type="text" class="form-control" formControlName="issueremark"/>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row mt-3 me-1 mb-3">
+
+            <button class="btn btn-secondary me-1" (click)="close()">
+                <em class="fa fa-save"></em>
+                ออก
+            </button>
+        </div>
+    </form>
+</div>

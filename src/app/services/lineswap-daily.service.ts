@@ -1,0 +1,23 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
+import { Issue } from '../interfaces';
+import { environment } from '../../environments/environment.development';
+
+const URLAPI = environment.urlapi
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LineswapDailyService {
+
+  constructor(private readonly _http: HttpClient) { }
+
+  findall(token: string, frmDate: string): Observable<Issue[]> {
+    return this._http.get<Issue[]>(`${URLAPI}/issue/findtoday/${token}/${frmDate}`);
+  }
+
+  finddaily(token: string, date: string): Observable<Issue[]> {
+    return this._http.get<Issue[]>(`${URLAPI}/lineswap/finddaily/${token}/${date}`);
+  }
+}

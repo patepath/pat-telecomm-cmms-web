@@ -1,0 +1,68 @@
+<div class="container-fluid overflow-auto" style="height: 100vh;">
+    <nav class="navbar navbar-light bg-light mt-2 mb-3">
+        <div class="container-fluid">
+            <span class="navbar-brand">งานประจำวัน</span>
+        </div>
+    </nav>
+
+    <div class="d-flex flex-wrap">
+        <div class="form-group">
+            <label>วันที่</label>
+            <input type="date" class="form-control" [(ngModel)]="date" (ngModelChange)="search()" >
+        </div>
+    </div>
+    
+    <div class="table-responsive mt-5 w-50">
+        <h1 class="h5">งานประจำวันทั้งหมด</h1>
+
+        <table id="jobs-daily-all-table" class="table table-hover mt-1">
+            <caption></caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable1.headerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable1.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive mt-3 w-50">
+        <h1 class="h5">งานรับสายโทรศัพท์ภายใน</h1>
+
+        <table id="jobs-daily-internal-table" class="table table-hover mt-1">
+            <caption></caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable2.headerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable2.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-responsive mt-3 w-50">
+        <h1 class="h5">งานรับสายโทรศัพท์ภายนอก</h1>
+
+        <table id="jobs-daily-external-table" class="table table-hover mt-1">
+            <caption></caption>
+
+            <thead>
+                <tr>
+                    <th *ngFor="let header of dataTable2.headerRow">{{header}}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of dataTable2.dataRows"></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
