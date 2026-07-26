@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { DataTable, Issue, IssueInquiry, IssueType, LineswapReport } from '../../interfaces';
-import { LineswapDailyService } from '../../services/lineswap-daily.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LineswapReportService } from '../../services/lineswap-report.service';
