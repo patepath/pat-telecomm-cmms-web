@@ -20,4 +20,12 @@ export class LineswapReportService {
   reportdaily(token: string, date: string, type: number): Observable<LineswapReport[]> {
     return this._http.get<LineswapReport[]>(`${URLAPI}/lineswap/reportdaily/${token}/${date}/${type}`);
   }
+
+  reportperiodall(token: string, frmdate: string, todate: string): Observable<LineswapReport[]> {
+    return this._http.get<LineswapReport[]>(`${URLAPI}/lineswap/reportperiodall/${token}/${frmdate}/${todate}`);
+  }
+
+  reportperiod(token: string, frmdate: string, todate: string, type: number): Observable<LineswapReport[]> {
+    return this._http.get<LineswapReport[]>(`${URLAPI}/lineswap/reportperiod/${token}/${frmdate}/${todate}/${type}`);
+  }
 }
