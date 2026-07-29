@@ -136,45 +136,6 @@ export class LineswapReportPeriodComponent {
     self.searchbydate();
   }
 
- // search(): void {
- //   this._rptserv.reportdailyall(this.token, this.date).subscribe({
- //     next: (res) => {
- //       this.data1 = res.map(rpt => [
- //         (res.indexOf(rpt) +1).toString(),
- //         rpt.type == 1 ? 'สายใน' : rpt.type == 2 ? 'สายนอก': 'ไม่ระบุ',
- //         rpt.total.toString()
- //       ]);
- //       $('#jobs-daily-all-table').DataTable().clear().rows.add(this.data1).draw();
- //     }
- //   });
-
- //   this._rptserv.reportdaily(this.token, this.date, 1).subscribe({
- //     next: (res) => {
- //       this.data2 = res.map(rpt => [
- //         (res.indexOf(rpt) +1).toString(),
- //         this.issueTypes[rpt.type].value == 0 ? '-' : this.issueTypes[rpt.type].name,
- //         this.issueInquiries[rpt.subtype]?.value == 0 ? '-' : this.issueInquiries[rpt.subtype]?.name || 'ไม่ระบุ',
- //         rpt.total.toString()
- //       ]);
- //       $('#jobs-daily-internal-table').DataTable().clear().rows.add(this.data2).draw();
- //     }
- //   });
-
- //   this._rptserv.reportdaily(this.token, this.date, 2).subscribe({
- //     next: (res) => {
- //       this.data3 = res.map(rpt => [
- //         (res.indexOf(rpt) +1).toString(),
- //         this.issueTypes[rpt.type].name,
- //         this.issueInquiries[rpt.subtype].value == 0 ? '-' : this.issueInquiries[rpt.subtype].name,
- //         rpt.total.toString()
- //       ]);
- //       $('#jobs-daily-external-table').DataTable().clear().rows.add(this.data3).draw();
- //     }
- //   });
-
- //   this.searchbydate();
- // }
-
   getIssueTypeText(issuetype: number): string {
     switch(issuetype) {
       case 1: return 'ติดต่อสอบถาม';

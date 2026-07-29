@@ -1,10 +1,10 @@
 <div class="container-fluid overflow-auto" style="height: 100vh;">
     <nav class="navbar navbar-light bg-light mt-2 mb-3">
         <div class="container-fluid">
-            <span class="navbar-brand">งานตามช่วงเวลา</span>
+            <span class="navbar-brand">งานทั้งหมด</span>
         </div>
     </nav>
-
+    
     <div class="d-flex flex-wrap">
         <div class="form-group">
             <label>ช่วง</label>
@@ -28,57 +28,23 @@
             <input type="date" class="form-control ms-1" [(ngModel)]="toDate" (ngModelChange)="searchbydate()">
         </div>
     </div>
-    
-    <div class="table-responsive mt-5 w-50">
-        <h1 class="h5">การปฏิบัติการหมวดสลับสาย</h1>
 
-        <table id="jobs-period-all-table" class="table table-hover mt-1">
+    <div class="table-responsive mt-3">
+        <div class="alert alert-info mb-3" *ngIf="filteredCount > 0">
+            <strong>พบผลลัพธ์:</strong> {{ filteredCount }} รายการ
+        </div>
+        
+        <table id="jobs-all-issue-table" class="table table-hover mt-1">
             <caption></caption>
 
             <thead>
                 <tr>
-                    <th *ngFor="let header of dataTable1.headerRow">{{header}}</th>
+                    <th *ngFor="let header of dataTable.headerRow">{{header}}</th>
                 </tr>
             </thead>
 
             <tbody>
-                <tr *ngFor="let row of dataTable1.dataRows"></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="table-responsive mt-3 w-50">
-        <h1 class="h5">งานรับสายโทรศัพท์ภายใน</h1>
-
-        <table id="jobs-period-internal-table" class="table table-hover mt-1">
-            <caption></caption>
-
-            <thead>
-                <tr>
-                    <th *ngFor="let header of dataTable2.headerRow">{{header}}</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr *ngFor="let row of dataTable2.dataRows"></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="table-responsive mt-3 w-50">
-        <h1 class="h5">งานรับสายโทรศัพท์ภายนอก</h1>
-
-        <table id="jobs-period-external-table" class="table table-hover mt-1">
-            <caption></caption>
-
-            <thead>
-                <tr>
-                    <th *ngFor="let header of dataTable3.headerRow">{{header}}</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr *ngFor="let row of dataTable3.dataRows"></tr>
+                <tr *ngFor="let row of dataTable.dataRows"></tr>
             </tbody>
         </table>
     </div>

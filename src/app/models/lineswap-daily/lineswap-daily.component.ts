@@ -90,7 +90,7 @@ export class LineswapDailyComponent {
       self.filteredCount = table.rows({ search: 'applied' }).count();
     });
 
-    self.search();
+    self.search
   }
 
   search(): void {

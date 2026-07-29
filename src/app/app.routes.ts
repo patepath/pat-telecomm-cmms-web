@@ -22,6 +22,7 @@ import { LineswapDailyComponent } from './models/lineswap-daily/lineswap-daily.c
 import { LineswapEditComponent } from './models/lineswap-edit/lineswap-edit.component';
 import { LineswapReportDailyComponent } from './models/lineswap-report-daily/lineswap-report-daily.component';
 import { LineswapReportPeriodComponent } from './models/lineswap-report-period/lineswap-report-period.component';
+import { LineswapAllIssueComponent } from './models/lineswap-all-issue/lineswap-all-issue.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent},
@@ -66,7 +67,7 @@ export const routes: Routes = [
             { path: 'report-daily', component: LineswapReportDailyComponent },
             { path: 'report-period', component: LineswapReportPeriodComponent },
             { path: 'jobs-daily', component: LineswapDailyComponent },
-            { path: 'jobs-closed-tech', component: LineswapFinishedComponent },
+            { path: 'jobs-all-issue', component: LineswapAllIssueComponent },
             { path: 'setting-phone', component: SettingPhoneComponent },
             { path: 'setting-lineswap', component: SettingLineswapComponent },
         ]

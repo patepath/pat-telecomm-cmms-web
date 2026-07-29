@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { LineswapReport } from '../interfaces';
+import { LineswapIssue, LineswapReport } from '../interfaces';
 import { Observable } from 'rxjs/internal/Observable';
 
 const URLAPI = environment.urlapi
@@ -15,6 +15,10 @@ export class LineswapReportService {
 
   reportdailyall(token: string, date: string): Observable<LineswapReport[]> {
     return this._http.get<LineswapReport[]>(`${URLAPI}/lineswap/reportdailyall/${token}/${date}`);
+  }
+
+  reportbyperiod(token: string, frmdate: string, todate: string): Observable<LineswapIssue[]> {
+    return this._http.get<LineswapIssue[]>(`${URLAPI}/lineswap/reportbyperiod/${token}/${frmdate}/${todate}`);
   }
 
   reportdaily(token: string, date: string, type: number): Observable<LineswapReport[]> {
