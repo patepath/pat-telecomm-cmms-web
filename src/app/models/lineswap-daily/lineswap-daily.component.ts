@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { DataTable, Issue } from '../../interfaces';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ declare let $:any;
   templateUrl: './lineswap-daily.component.html',
   styleUrl: './lineswap-daily.component.css'
 })
-export class LineswapDailyComponent {
+export class LineswapDailyComponent implements AfterViewInit {
   public dataTable!: DataTable;
 	public data!: string[][];
   public issue: Issue=<Issue>{}
@@ -90,7 +90,7 @@ export class LineswapDailyComponent {
       self.filteredCount = table.rows({ search: 'applied' }).count();
     });
 
-    self.search
+    self.search();
   }
 
   search(): void {
